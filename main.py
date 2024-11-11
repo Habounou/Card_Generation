@@ -2,26 +2,8 @@ import random
 
 random_nbr = random.randint(0,100)
 
-def art_print (text, align = "c"):
-    print("┌────────────────────────┐")
-    if align == "l":
-        for new_lines in range(0, 5):
-            print("│  " + text[new_lines] + " " * (20 - len(text[new_lines])) + "  │")
-    elif align == "r":
-        for new_lines in range(0, 5):
-            print("│  " + " " * (20 - len(text[new_lines])) + text[new_lines] + "  │")
-    else:
-        for new_lines in range (0, 5):
-            if len(text[new_lines]) % 2 == 0:
-                print("│  " + " " * ((20 - len(text[new_lines])) // 2) + text[new_lines] +
-                      " " * ((20 - len(text[new_lines])) // 2) + "  │")
-            else:
-                print("│  \u202F\u200A" + " " * ((20 - len(text[new_lines])) // 2) + text[new_lines] +
-                      " " * ((20 - len(text[new_lines])) // 2) + "\u202F  │")
-    print("└────────────────────────┘")
-
 while True:
-    user_text = ["***********","***********","***********","***********","***********"]
+    user_text = ["*********************"] * 5
     while len(user_text[0 and 1 and 2 and 3 and 4]) > 20:
         user_text[0] = input("Enter 5 lines of characters to create a new card (maximum 20 characters per line):\n"
                              " ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓\n")
@@ -30,29 +12,45 @@ while True:
         if len(user_text[0 and 1 and 2 and 3 and 4]) > 20:
             print("You have exceeded the character limit in a line.")
 
-    art_print(user_text)
     align_choice = "c"
     while True:
+        art_result = "┌────────────────────────┐\n"
+        if align_choice == "l":
+            for new_lines in range(0, 5):
+                art_result += "│  " + user_text[new_lines] + " " * (20 - len(user_text[new_lines])) + "  │\n"
+        elif align_choice == "r":
+            for new_lines in range(0, 5):
+                art_result += "│  " + " " * (20 - len(user_text[new_lines])) + user_text[new_lines] + "  │\n"
+        else:
+            for new_lines in range(0, 5):
+                if len(user_text[new_lines]) % 2 == 0:
+                    art_result += ("│  " + " " * ((20 - len(user_text[new_lines])) // 2) + user_text[new_lines] +
+                                   " " * ((20 - len(user_text[new_lines])) // 2) + "  │\n")
+                else:
+                    art_result += (
+                            "│  \u202F\u200A" + " " * ((20 - len(user_text[new_lines])) // 2) + user_text[new_lines] +
+                            " " * ((20 - len(user_text[new_lines])) // 2) + "\u202F  │\n")
+        art_result += "└────────────────────────┘"
+        print(art_result)
         align_choice = input("Is the alignment right for you? (yes:Y/no:N)\n")
         if align_choice.upper() == "N":
             align_choice = input("Choose an alignment:\n- center:C\n- left:L\n- right:R\n").lower()
-            art_print(user_text, align_choice)
         else:
             break
 
-    print("┌──────────────────────────────────────────────────┐"
-          "│ ████████████████████████████████████████████████ │"
-          "│ █                                              █ │"
-          "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │"
-          "│ █            ── DIGITAL DUEL CARD ──           █ │"
-          "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │"
-          "│ █                                              █ │"
-          "│ ████████████████████████████████████████████████ │"
-          "├──────────────────────────────────────────────────┤"
-          "│        Card Name: ███████████████████████        │"
-          "│        Attribute: ████████                       │"
-          "│ ──────────────────────────────────────────────── │"
-          "│                                                  │")
+    print("┌──────────────────────────────────────────────────┐\n"
+          "│ ████████████████████████████████████████████████ │\n"
+          "│ █                                              █ │\n"
+          "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │\n"
+          "│ █           \u202F\u200A── DIGITAL DUEL CARD ──\u202F           █ │\n"
+          "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │\n"
+          "│ █                                              █ │\n"
+          "│ ████████████████████████████████████████████████ │\n"
+          "├──────────────────────────────────────────────────┤\n"
+          "│        Card Name: ███████████████████████        │\n"
+          "│        Attribute: ████████                       │\n"
+          "│ ──────────────────────────────────────────────── │\n"
+          "│                                                  │\n")
 
     redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n")
     if redo.upper() == "Y":
