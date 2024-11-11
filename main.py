@@ -38,6 +38,8 @@ while True:
         else:
             break
 
+    art_result = art_result.split("\n")
+
     print("┌──────────────────────────────────────────────────┐\n"
           "│ ████████████████████████████████████████████████ │\n"
           "│ █                                              █ │\n"
@@ -50,7 +52,21 @@ while True:
           "│        Card Name: ███████████████████████        │\n"
           "│        Attribute: ████████                       │\n"
           "│ ──────────────────────────────────────────────── │\n"
-          "│                                                  │\n")
+          "│ █          " + art_result[0] + "          █ │\n"
+          "│ █          " + art_result[1] + "          █ │\n"
+          "│ █          " + art_result[2] + "          █ │\n"
+          "│ █          " + art_result[3] + "          █ │\n"
+          "│ █          " + art_result[4] + "          █ │\n"
+          "│ █          " + art_result[5] + "          █ │\n"
+          "│ █          " + art_result[6] + "          █ │\n"
+          "│ █                   [EFFECT]                   █ │\n"
+          "│ █   This is a                                  █ │\n"
+          "│ █   Once per turn, you may discard 1 card to   █ │\n"
+          "│ █   gain 300 ATK until the end of this turn.   █ │\n"
+          "│ █                                              █ │\n"
+          "├──────────────────────────────────────────────────┤\n"
+          "│        ATK / DEF: █████ / █████                  │\n"
+          "└──────────────────────────────────────────────────┘\n")
 
     redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n")
     if redo.upper() == "Y":
