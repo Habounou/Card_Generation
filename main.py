@@ -34,39 +34,42 @@ while True:
         print(art_result)
         align_choice = input("Is the alignment right for you? (yes:Y/no:N)\n")
         if align_choice.upper() == "N":
-            align_choice = input("Choose an alignment:\n- center:C\n- left:L\n- right:R\n").lower()
+            align_choice = input("Choose an alignment:\n→ Center (C)\n→ Left (L)\n→ Right (R)\n").lower()
         else:
             break
 
     art_result = art_result.split("\n")
 
-    print("┌──────────────────────────────────────────────────┐\n"
-          "│ ████████████████████████████████████████████████ │\n"
-          "│ █                                              █ │\n"
-          "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │\n"
-          "│ █           \u202F\u200A── DIGITAL DUEL CARD ──\u202F           █ │\n"
-          "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │\n"
-          "│ █                                              █ │\n"
-          "│ ████████████████████████████████████████████████ │\n"
-          "├──────────────────────────────────────────────────┤\n"
-          "│        Card Name: ███████████████████████        │\n"
-          "│        Attribute: ████████                       │\n"
-          "│ ──────────────────────────────────────────────── │\n"
-          "│ █          " + art_result[0] + "          █ │\n"
-          "│ █          " + art_result[1] + "          █ │\n"
-          "│ █          " + art_result[2] + "          █ │\n"
-          "│ █          " + art_result[3] + "          █ │\n"
-          "│ █          " + art_result[4] + "          █ │\n"
-          "│ █          " + art_result[5] + "          █ │\n"
-          "│ █          " + art_result[6] + "          █ │\n"
-          "│ █                   [EFFECT]                   █ │\n"
-          "│ █   This is a                                  █ │\n"
-          "│ █   Once per turn, you may discard 1 card to   █ │\n"
-          "│ █   gain 300 ATK until the end of this turn.   █ │\n"
-          "│ █                                              █ │\n"
-          "├──────────────────────────────────────────────────┤\n"
-          "│        ATK / DEF: █████ / █████                  │\n"
-          "└──────────────────────────────────────────────────┘\n")
+    def card_print(art):
+        print("┌──────────────────────────────────────────────────┐\n"
+              "│ ████████████████████████████████████████████████ │\n"
+              "│ █                                              █ │\n"
+              "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │\n"
+              "│ █           \u202F\u200A── DIGITAL DUEL CARD ──\u202F           █ │\n"
+              "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │\n"
+              "│ █                                              █ │\n"
+              "│ ████████████████████████████████████████████████ │\n"
+              "├──────────────────────────────────────────────────┤\n"
+              "│        Card Name: ███████████████████████        │\n"
+              "│        Card Type: ████████                       │\n"
+              "│ ──────────────────────────────────────────────── │\n"
+              "│ █          " + art[0] + "          █ │\n"
+              "│ █          " + art[1] + "          █ │\n"
+              "│ █          " + art[2] + "          █ │\n"
+              "│ █          " + art[3] + "          █ │\n"
+              "│ █          " + art[4] + "          █ │\n"
+              "│ █          " + art[5] + "          █ │\n"
+              "│ █          " + art[6] + "          █ │\n"
+              "│ █                   [EFFECT]                   █ │\n"
+              "│ █   This is an example                         █ │\n"
+              "│ █                                              █ │\n"
+              "│ █                                              █ │\n"
+              "│ █                                              █ │\n"
+              "├──────────────────────────────────────────────────┤\n"
+              "│             ATK / RES: █████ / █████             │\n"
+              "└──────────────────────────────────────────────────┘\n")
+
+    card_print(art_result)
 
     redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n")
     if redo.upper() == "Y":
