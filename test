@@ -9,3 +9,5 @@ for new_lines in range (0, 3):
               " " * ((10 - len(user_text[new_lines])) // 2) + "\u202F   |")
 print("|                |")
 print("*----------------*")
+
+│                        │
