@@ -1,0 +1,11 @@
+print("*----------------*")
+print("|                |")
+for new_lines in range (0, 3):
+    if len(user_text[new_lines]) % 2 == 0:
+        print("|   " + " " * ((10 - len(user_text[new_lines])) // 2) + user_text[new_lines] +
+              " " * ((10 - len(user_text[new_lines])) // 2) + "   |")
+    else:
+        print("|   \u202F\u200A" + " " * ((10 - len(user_text[new_lines])) // 2) + user_text[new_lines] +
+              " " * ((10 - len(user_text[new_lines])) // 2) + "\u202F   |")
+print("|                |")
+print("*----------------*")
