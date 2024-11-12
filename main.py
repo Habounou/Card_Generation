@@ -6,7 +6,7 @@ while True:
     user_text = ["*********************"] * 5
     while len(user_text[0 and 1 and 2 and 3 and 4]) > 20:
         user_text[0] = input("Enter 5 lines of characters to create a new card (maximum 20 characters per line):\n"
-                             " ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓\n")
+                             "           Maximum ↓\n")
         for lines in range (0, 4):
             user_text[lines + 1] = input("").lower()
         if len(user_text[0 and 1 and 2 and 3 and 4]) > 20:
@@ -40,7 +40,28 @@ while True:
 
     art_result = art_result.split("\n")
 
-    def card_print(art):
+    def effect_line_return(effect):
+        spaced_effect = ["", "", "", ""]
+        effect = effect.split()
+        current_index = 0
+        for rows in range(0, 4):
+            while len(spaced_effect[rows]) < 40:
+                if current_index < len(effect):
+                    if len(spaced_effect[rows]) + len(effect[current_index]) < 40:
+                        spaced_effect[rows] += effect[current_index]
+                        current_index += 1
+                        if current_index != len(effect) - 1:
+                            spaced_effect[rows] += " "
+                    else:
+                        spaced_effect[rows] += " "
+                else:
+                    spaced_effect[rows] += " "
+        return spaced_effect
+
+    card_effect = "This is an example."
+    card_effect = effect_line_return(card_effect)
+
+    def card_print(art, effect):
         print("┌──────────────────────────────────────────────────┐\n"
               "│ ████████████████████████████████████████████████ │\n"
               "│ █                                              █ │\n"
@@ -61,15 +82,15 @@ while True:
               "│ █          " + art[5] + "          █ │\n"
               "│ █          " + art[6] + "          █ │\n"
               "│ █                   [EFFECT]                   █ │\n"
-              "│ █   This is an example                         █ │\n"
-              "│ █                                              █ │\n"
-              "│ █                                              █ │\n"
-              "│ █                                              █ │\n"
+              "│ █   " + effect[0] + "   █ │\n"
+              "│ █   " + effect[1] + "   █ │\n"
+              "│ █   " + effect[2] + "   █ │\n"
+              "│ █   " + effect[3] + "   █ │\n"
               "├──────────────────────────────────────────────────┤\n"
               "│             ATK / RES: █████ / █████             │\n"
               "└──────────────────────────────────────────────────┘\n")
 
-    card_print(art_result)
+    card_print(art_result, card_effect)
 
     redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n")
     if redo.upper() == "Y":
