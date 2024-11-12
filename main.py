@@ -2,7 +2,19 @@ import random
 
 random_nbr = random.randint(0,100)
 
-def art_print (text, align):
+def row_print(card_list_ref, effect):
+    card_row = []
+    row_print_result = ""
+    for cards in range(0, 3):
+        art_in_row = art_print(card_list_ref[6 * cards: 6 * cards + 5], card_list_ref[6 * cards + 6]).split("\n")
+        card_effect_in_row = effect_line_return(effect)
+        card_row += card_print(art_in_row, card_effect_in_row)
+    for card_height in range(0, len(card_row) // 3):
+        row_print_result += (card_row[card_height] + "     " + card_row[card_height + len(card_row) // 3] + "     " +
+                            card_row[card_height + 2 * len(card_row) // 3] + "\n")
+    return row_print_result
+
+def art_print(text, align):
     art_result = "┌────────────────────────┐\n"
     if align == "l":
         for new_lines in range(0, 5):
@@ -121,14 +133,7 @@ else:
 
     print("\u202F\u200A───────────────────────────────────────────────────────────────────────────"
           " CARD DATABASE ───────────────────────────────────────────────────────────────────────────\u202F\n")
-    card_row = []
-    for cards in range(0, 3):
-        art_list = art_print(card_list[6 * cards: 6 * cards + 5], card_list[6 * cards + 6]).split("\n")
-        card_effect = effect_line_return("test")
-        card_row += card_print(art_list, card_effect)
-    for card_height in range(0, len(card_row) // 3):
-        print(card_row[card_height] + "     " + card_row[card_height + len(card_row) // 3] + "     " +
-              card_row[card_height + 2 * len(card_row) // 3])
+    print(row_print(card_list, "test"))
     user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n→ To exit (Q)\n").upper()
     if user_action == "S":
         print()
