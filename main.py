@@ -5,17 +5,20 @@ random_nbr = random.randint(0,100)
 def row_print(card_list_ref, effect, page = 0):
     card_row = []
     row_print_result = ""
-    if (len(card_list_ref) - 1) / 18 > page:
-        for cards in range(0 + page * 3, 3 + page * 3):
-                art_in_row = art_print(card_list_ref[6 * cards: 6 * cards + 5], card_list_ref[6 * cards + 6]).split("\n")
-                card_effect_in_row = effect_line_return(effect)
-                card_row += card_print(art_in_row, card_effect_in_row)
+    for cards in range(0 + page * 3, 3 + page * 3):
+        if (len(card_list_ref) - 1) / 18 >= (page + 1) * ((cards - page * 3) + 1) / 3:
+            art_in_row = art_print(card_list_ref[6 * cards: 6 * cards + 5], card_list_ref[6 * cards + 6]).split("\n")
+            card_effect_in_row = effect_line_return(effect)
+            card_row += card_print(art_in_row, card_effect_in_row)
+        else:
+            card_row += " " * 28
+    if (len(card_list_ref) - 1) / 18 != page:
         for card_height in range(0, len(card_row) // 3):
             row_print_result += (card_row[card_height] + "     " + card_row[card_height + len(card_row) // 3] + "     " +
                                 card_row[card_height + 2 * len(card_row) // 3] + "\n")
-        return row_print_result
     else:
         return "No more cards in your collection."
+    return row_print_result
 
 def art_print(text, align):
     art_result = "┌────────────────────────┐\n"
@@ -132,7 +135,6 @@ if start_message.upper() == "C":
 else:
     with open("Card_list.txt", "r", encoding="utf-8") as txt_file:
         card_list = txt_file.read().split("│")
-        print(card_list)
 
     print("\u202F\u200A───────────────────────────────────────────────────────────────────────────"
           " CARD DATABASE ───────────────────────────────────────────────────────────────────────────\u202F\n")
