@@ -119,14 +119,15 @@ else:
     with open("Card_list.txt", "r", encoding="utf-8") as txt_file:
         card_list = txt_file.read().split("│")
 
-    print("──────────────────────────────────────── CARD DATABASE ────────────────────────────────────────")
-    card_row = [""]
+    print("\u202F\u200A───────────────────────────────────────────────────────────────────────────"
+          " CARD DATABASE ───────────────────────────────────────────────────────────────────────────\u202F\n")
+    card_row = []
     for cards in range(0, 3):
         art_list = art_print(card_list[6 * cards: 6 * cards + 5], card_list[6 * cards + 6]).split("\n")
         card_effect = effect_line_return("test")
         card_row += card_print(art_list, card_effect)
     for card_height in range(0, len(card_row) // 3):
-        print(card_row[card_height] + card_row[card_height + len(card_row) // 3] +
+        print(card_row[card_height] + "     " + card_row[card_height + len(card_row) // 3] + "     " +
               card_row[card_height + 2 * len(card_row) // 3])
     user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n→ To exit (Q)\n").upper()
     if user_action == "S":
