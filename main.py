@@ -19,7 +19,7 @@ def art_print (text, align):
                 art_result += ("│  \u202F\u200A" + " " * ((20 - len(text[new_lines])) // 2) + text[new_lines] +
                                " " * ((20 - len(text[new_lines])) // 2) + "\u202F  │\n")
     art_result += "└────────────────────────┘"
-    return art_result
+    return art_result.split("\n")
 
 def effect_line_return(effect):
     spaced_effect = ["", "", "", ""]
@@ -91,25 +91,42 @@ if start_message.upper() == "C":
                 align_choice = "c"
                 break
 
-        art_list = art_print(user_text, align_choice).split("\n")
+        art_list = art_print(user_text, align_choice)
 
         card_effect = "This is an example."
         card_effect = effect_line_return(card_effect)
 
         card_print(art_list, card_effect)
 
-        redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n")
-        if redo.upper() != "N":
+        redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n").upper()
+        if redo != "N":
             break
 
-    with open("Card_list.txt", "w", encoding="utf-8") as txt_file:
-        txt_file.write("\n".join(user_text) + "\n" + align_choice)
+    with open("Card_list.txt", "a", encoding="utf-8") as txt_file:
+        txt_file.write("│".join(user_text) + "│" + align_choice + "│")
 
     ascii_sum = 0
     for nbr_lines in range (0, 5):
         ascii_sum = sum(ord(char) for char in user_text[nbr_lines])
     random.seed(ascii_sum)
 
+    print("Here is your card:")
+    card_effect = effect_line_return(str(random.randint(0,10000000)))
+    card_print(art_list, card_effect)
+
 else:
     with open("Card_list.txt", "r", encoding="utf-8") as txt_file:
-        card_list = txt_file.read().split("\n")
+        card_list = txt_file.read().split("│")
+
+    print("──────────────────────────────────────── CARD DATABASE ────────────────────────────────────────")
+    for cards in range (0,3):
+        art_list = art_print(card_list[6 * cards: 6 * cards + 5], card_list[6 * cards + 6])
+        card_effect = effect_line_return("test")
+        card_print(art_list, card_effect)
+    user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n→ To exit (Q)\n").upper()
+    if user_action == "S":
+        print()
+    elif user_action == "":
+        print()
+    else:
+        exit()
