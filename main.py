@@ -100,11 +100,10 @@ if start_message.upper() == "C":
         align_choice = "c"
         while True:
             print(art_print(user_text, align_choice))
-            align_choice = input("Is the alignment right for you? (yes:Y/no:N)\n")
-            if align_choice.upper() == "N":
+            modify_align = input("Is the alignment right for you? (yes:Y/no:N)\n")
+            if modify_align.upper() == "N":
                 align_choice = input("Choose an alignment:\n→ Center (C)\n→ Left (L)\n→ Right (R)\n").lower()
             else:
-                align_choice = "c"
                 break
 
         art_list = art_print(user_text, align_choice).split("\n")
