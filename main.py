@@ -46,15 +46,16 @@ def effect_line_return(effect):
     for rows in range(0, 4):
         while len(spaced_effect[rows]) < 40:
             if current_index < len(effect):
-                if len(spaced_effect[rows]) + len(effect[current_index]) < 40:
+                if len(spaced_effect[rows]) + len(effect[current_index]) + 1 <= 40:
+                    spaced_effect[rows] += effect[current_index] + " "
+                    current_index += 1
+                elif len(spaced_effect[rows]) + len(effect[current_index]) <= 40:
                     spaced_effect[rows] += effect[current_index]
                     current_index += 1
-                    if current_index != len(effect) - 1:
-                        spaced_effect[rows] += " "
                 else:
-                    spaced_effect[rows] += " "
+                    break
             else:
-                spaced_effect[rows] += " "
+                spaced_effect[rows] += " " * (40 - len(spaced_effect[rows]))
     return spaced_effect
 
 def card_print(art, effect):
@@ -129,7 +130,7 @@ if start_message.upper() == "C":
     random.seed(ascii_sum)
 
     print("Here is your card:")
-    card_effect = effect_line_return(str(random.randint(0,10000000)))
+    card_effect = effect_line_return(str(random.randint(0,10000000)) + "This is a test")
     print("\n".join(card_print(art_list, card_effect)))
 
 else:
