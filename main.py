@@ -7,7 +7,7 @@ def row_print(card_list_ref, effect, page = 0):
     row_print_result = ""
     for cards in range(0 + page * 3, 3 + page * 3):
         if (len(card_list_ref) - 1) / 18 >= (page + 1) * ((cards - page * 3) + 1) / 3:
-            art_in_row = art_print(card_list_ref[6 * cards: 6 * cards + 5], card_list_ref[6 * cards + 6]).split("\n")
+            art_in_row = art_print(card_list_ref[6 * cards: 6 * cards + 5], card_list_ref[6 * cards + 5]).split("\n")
             card_effect_in_row = effect_line_return(effect)
             card_row += card_print(art_in_row, card_effect_in_row)
         else:
