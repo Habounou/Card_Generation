@@ -2,6 +2,25 @@ import random
 
 random_nbr = random.randint(0,100)
 
+def art_print (text, align):
+    art_result = "┌────────────────────────┐\n"
+    if align == "l":
+        for new_lines in range(0, 5):
+            art_result += "│  " + text[new_lines] + " " * (20 - len(text[new_lines])) + "  │\n"
+    elif align == "r":
+        for new_lines in range(0, 5):
+            art_result += "│  " + " " * (20 - len(text[new_lines])) + text[new_lines] + "  │\n"
+    else:
+        for new_lines in range(0, 5):
+            if len(text[new_lines]) % 2 == 0:
+                art_result += ("│  " + " " * ((20 - len(text[new_lines])) // 2) + text[new_lines] +
+                               " " * ((20 - len(text[new_lines])) // 2) + "  │\n")
+            else:
+                art_result += ("│  \u202F\u200A" + " " * ((20 - len(text[new_lines])) // 2) + text[new_lines] +
+                               " " * ((20 - len(text[new_lines])) // 2) + "\u202F  │\n")
+    art_result += "└────────────────────────┘"
+    return art_result
+
 def effect_line_return(effect):
     spaced_effect = ["", "", "", ""]
     effect = effect.split()
@@ -64,45 +83,27 @@ if start_message.upper() == "C":
 
         align_choice = "c"
         while True:
-            art_result = "┌────────────────────────┐\n"
-            if align_choice == "l":
-                for new_lines in range(0, 5):
-                    art_result += "│  " + user_text[new_lines] + " " * (20 - len(user_text[new_lines])) + "  │\n"
-            elif align_choice == "r":
-                for new_lines in range(0, 5):
-                    art_result += "│  " + " " * (20 - len(user_text[new_lines])) + user_text[new_lines] + "  │\n"
-            else:
-                for new_lines in range(0, 5):
-                    if len(user_text[new_lines]) % 2 == 0:
-                        art_result += ("│  " + " " * ((20 - len(user_text[new_lines])) // 2) + user_text[new_lines] +
-                                       " " * ((20 - len(user_text[new_lines])) // 2) + "  │\n")
-                    else:
-                        art_result += (
-                                "│  \u202F\u200A" + " " * ((20 - len(user_text[new_lines])) // 2) + user_text[new_lines] +
-                                " " * ((20 - len(user_text[new_lines])) // 2) + "\u202F  │\n")
-            art_result += "└────────────────────────┘"
-            print(art_result)
+            print(art_print(user_text, align_choice))
             align_choice = input("Is the alignment right for you? (yes:Y/no:N)\n")
             if align_choice.upper() == "N":
                 align_choice = input("Choose an alignment:\n→ Center (C)\n→ Left (L)\n→ Right (R)\n").lower()
             else:
+                align_choice = "c"
                 break
 
-        art_result = art_result.split("\n")
+        art_list = art_print(user_text, align_choice).split("\n")
 
         card_effect = "This is an example."
         card_effect = effect_line_return(card_effect)
 
-        card_print(art_result, card_effect)
+        card_print(art_list, card_effect)
 
         redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n")
-        if redo.upper() == "Y":
-            continue
-        else:
+        if redo.upper() != "N":
             break
 
     with open("Card_list.txt", "w", encoding="utf-8") as txt_file:
-        txt_file.write("\n".join(user_text))
+        txt_file.write("\n".join(user_text) + "\n" + align_choice)
 
     ascii_sum = 0
     for nbr_lines in range (0, 5):
