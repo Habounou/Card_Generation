@@ -19,7 +19,7 @@ def art_print (text, align):
                 art_result += ("│  \u202F\u200A" + " " * ((20 - len(text[new_lines])) // 2) + text[new_lines] +
                                " " * ((20 - len(text[new_lines])) // 2) + "\u202F  │\n")
     art_result += "└────────────────────────┘"
-    return art_result.split("\n")
+    return art_result
 
 def effect_line_return(effect):
     spaced_effect = ["", "", "", ""]
@@ -40,33 +40,34 @@ def effect_line_return(effect):
     return spaced_effect
 
 def card_print(art, effect):
-    print("┌──────────────────────────────────────────────────┐\n"
-          "│ ████████████████████████████████████████████████ │\n"
-          "│ █                                              █ │\n"
-          "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │\n"
-          "│ █           \u202F\u200A── DIGITAL DUEL CARD ──\u202F           █ │\n"
-          "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │\n"
-          "│ █                                              █ │\n"
-          "│ ████████████████████████████████████████████████ │\n"
-          "├──────────────────────────────────────────────────┤\n"
-          "│        Card Name: ███████████████████████        │\n"
-          "│        Card Type: ████████                       │\n"
-          "│ ──────────────────────────────────────────────── │\n"
-          "│ █          " + art[0] + "          █ │\n"
-          "│ █          " + art[1] + "          █ │\n"
-          "│ █          " + art[2] + "          █ │\n"
-          "│ █          " + art[3] + "          █ │\n"
-          "│ █          " + art[4] + "          █ │\n"
-          "│ █          " + art[5] + "          █ │\n"
-          "│ █          " + art[6] + "          █ │\n"
-          "│ █                   [EFFECT]                   █ │\n"
-          "│ █   " + effect[0] + "   █ │\n"
-          "│ █   " + effect[1] + "   █ │\n"
-          "│ █   " + effect[2] + "   █ │\n"
-          "│ █   " + effect[3] + "   █ │\n"
-          "├──────────────────────────────────────────────────┤\n"
-          "│             ATK / RES: █████ / █████             │\n"
-          "└──────────────────────────────────────────────────┘\n")
+    final_card = ["┌──────────────────────────────────────────────────┐",
+                  "│ ████████████████████████████████████████████████ │",
+                  "│ █                                              █ │",
+                  "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │",
+                  "│ █           \u202F\u200A── DIGITAL DUEL CARD ──\u202F           █ │",
+                  "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │",
+                  "│ █                                              █ │",
+                  "│ ████████████████████████████████████████████████ │",
+                  "├──────────────────────────────────────────────────┤",
+                  "│        Card Name: ███████████████████████        │",
+                  "│        Card Type: ████████                       │",
+                  "│ ──────────────────────────────────────────────── │",
+                  "│ █          " + art[0] + "          █ │",
+                  "│ █          " + art[1] + "          █ │",
+                  "│ █          " + art[2] + "          █ │",
+                  "│ █          " + art[3] + "          █ │",
+                  "│ █          " + art[4] + "          █ │",
+                  "│ █          " + art[5] + "          █ │",
+                  "│ █          " + art[6] + "          █ │",
+                  "│ █                   [EFFECT]                   █ │",
+                  "│ █   " + effect[0] + "   █ │",
+                  "│ █   " + effect[1] + "   █ │",
+                  "│ █   " + effect[2] + "   █ │",
+                  "│ █   " + effect[3] + "   █ │",
+                  "├──────────────────────────────────────────────────┤",
+                  "│             ATK / RES: █████ / █████             │",
+                  "└──────────────────────────────────────────────────┘"]
+    return final_card
 
 start_message = input("Welcome to the Digital Duel Card Creator. What are you here for?\n"
                       "→ To create a card (C)\n→ To browse your collection - Card_list.txt (B)\n")
@@ -91,12 +92,12 @@ if start_message.upper() == "C":
                 align_choice = "c"
                 break
 
-        art_list = art_print(user_text, align_choice)
+        art_list = art_print(user_text, align_choice).split("\n")
 
         card_effect = "This is an example."
         card_effect = effect_line_return(card_effect)
 
-        card_print(art_list, card_effect)
+        print("\n".join(card_print(art_list, card_effect)))
 
         redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n").upper()
         if redo != "N":
@@ -112,17 +113,21 @@ if start_message.upper() == "C":
 
     print("Here is your card:")
     card_effect = effect_line_return(str(random.randint(0,10000000)))
-    card_print(art_list, card_effect)
+    print("\n".join(card_print(art_list, card_effect)))
 
 else:
     with open("Card_list.txt", "r", encoding="utf-8") as txt_file:
         card_list = txt_file.read().split("│")
 
     print("──────────────────────────────────────── CARD DATABASE ────────────────────────────────────────")
-    for cards in range (0,3):
-        art_list = art_print(card_list[6 * cards: 6 * cards + 5], card_list[6 * cards + 6])
+    card_row = [""]
+    for cards in range(0, 3):
+        art_list = art_print(card_list[6 * cards: 6 * cards + 5], card_list[6 * cards + 6]).split("\n")
         card_effect = effect_line_return("test")
-        card_print(art_list, card_effect)
+        card_row += card_print(art_list, card_effect)
+    for card_height in range(0, len(card_row) // 3):
+        print(card_row[card_height] + card_row[card_height + len(card_row) // 3] +
+              card_row[card_height + 2 * len(card_row) // 3])
     user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n→ To exit (Q)\n").upper()
     if user_action == "S":
         print()
