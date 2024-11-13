@@ -105,78 +105,82 @@ def card_print(art, effect):
                   "└──────────────────────────────────────────────────┘"]
     return final_card
 
-start_message = input("Welcome to the Digital Duel Card Creator. What are you here for?\n"
-                      "→ To create a card (C)\n→ To browse your collection - Card_list.txt (B)\n")
-if start_message.upper() == "C":
-    while True:
-        user_text = ["*********************"] * 5
-        while len(user_text[0 and 1 and 2 and 3 and 4]) > 20:
-            user_text[0] = input("Enter 5 lines of characters to create a new card (maximum 20 characters per line):\n"
-                                 "           Maximum ↓\n")
-            for lines in range (0, 4):
-                user_text[lines + 1] = input("")
-            if len(user_text[0 and 1 and 2 and 3 and 4]) > 20:
-                print("You have exceeded the character limit in a line.")
-
-        align_choice = "c"
+print("Welcome to the Digital Duel Card Creator. What are you here for?")
+while True:
+    start_message = input("→ To create a card (C)\n→ To browse your collection - Card_list.txt (B)\n→ To exit (Q)\n")
+    if start_message.upper() == "C":
         while True:
-            print(art_print(user_text, align_choice))
-            modify_align = input("Is the alignment right for you? (yes:Y/no:N)\n")
-            if modify_align.upper() == "N":
-                align_choice = input("Choose an alignment:\n→ Center (C)\n→ Left (L)\n→ Right (R)\n").lower()
-            else:
+            user_text = ["*********************"] * 5
+            while len(user_text[0 and 1 and 2 and 3 and 4]) > 20:
+                user_text[0] = input("Enter 5 lines of characters to create a new card (maximum 20 characters per line):\n"
+                                     "           Maximum ↓\n")
+                for lines in range (0, 4):
+                    user_text[lines + 1] = input("")
+                if len(user_text[0 and 1 and 2 and 3 and 4]) > 20:
+                    print("You have exceeded the character limit in a line.")
+
+            align_choice = "c"
+            while True:
+                print(art_print(user_text, align_choice))
+                modify_align = input("Is the alignment right for you? (yes:Y/no:N)\n")
+                if modify_align.upper() == "N":
+                    align_choice = input("Choose an alignment:\n→ Center (C)\n→ Left (L)\n→ Right (R)\n").lower()
+                else:
+                    break
+
+            art_list = art_print(user_text, align_choice).split("\n")
+
+            card_effect = "This is an example."
+            card_effect = effect_line_return(card_effect)
+
+            print("\n".join(card_print(art_list, card_effect)))
+
+            redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n").upper()
+            if redo != "N":
                 break
 
-        art_list = art_print(user_text, align_choice).split("\n")
+        with open("Card_list.txt", "a", encoding="utf-8") as txt_file:
+            txt_file.write("│".join(user_text) + "│" + align_choice + "│")
 
-        card_effect = "This is an example."
-        card_effect = effect_line_return(card_effect)
+        ascii_sum = 0
+        for nbr_lines in range (0, 5):
+            ascii_sum = sum(ord(char) for char in user_text[nbr_lines])
+        random.seed(ascii_sum)
 
+        print("Here is your card:")
+        card_effect = effect_line_return(str(random.randint(0,10000000)) + " This is a test")
         print("\n".join(card_print(art_list, card_effect)))
 
-        redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n").upper()
-        if redo != "N":
-            break
+    elif start_message.upper() == "Q":
+        break
 
-    with open("Card_list.txt", "a", encoding="utf-8") as txt_file:
-        txt_file.write("│".join(user_text) + "│" + align_choice + "│")
+    else:
+        with open("Card_list.txt", "r", encoding="utf-8") as txt_file:
+            card_list = txt_file.read().split("│")
 
-    ascii_sum = 0
-    for nbr_lines in range (0, 5):
-        ascii_sum = sum(ord(char) for char in user_text[nbr_lines])
-    random.seed(ascii_sum)
-
-    print("Here is your card:")
-    card_effect = effect_line_return(str(random.randint(0,10000000)) + " This is a test")
-    print("\n".join(card_print(art_list, card_effect)))
-
-else:
-    with open("Card_list.txt", "r", encoding="utf-8") as txt_file:
-        card_list = txt_file.read().split("│")
-
-    print("─────────────────────────────────────────────────────────────────────── CARD DATABASE"
-          " ──────────────────────────────────────────────────────────────────────\n")
-    page_index = 0
-    print(row_print(card_list, "test"))
-    while True:
-        user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n→ To exit (Q)\n").upper()
-        if user_action == "S":
-            while True:
-                search_criteria = input("You are searching for:\n")
-                new_card_list = card_search(card_list, search_criteria)
-                print(row_print(new_card_list, "test"))
-                user_action = input("→ To search for another card (S)"
-                                    "\n→ To see more result (Enter)\n→ To exit to the main menu (Q)\n").upper()
-                if user_action == "S":
-                    continue
-                elif user_action == "":
-                    page_index += 1
-                    print(row_print(new_card_list, "test", page_index))
-                else:
-                    page_index = 0
-                    break
-        elif user_action == "":
-            page_index += 1
-            print(row_print(card_list, "test", page_index))
-        else:
-            break
+        print("─────────────────────────────────────────────────────────────────────── CARD DATABASE"
+              " ──────────────────────────────────────────────────────────────────────\n")
+        page_index = 0
+        print(row_print(card_list, "test"))
+        while True:
+            user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n→ To exit (Q)\n").upper()
+            if user_action == "S":
+                while True:
+                    search_criteria = input("You are searching for:\n")
+                    new_card_list = card_search(card_list, search_criteria)
+                    print(row_print(new_card_list, "test"))
+                    user_action = input("→ To search for another card (S)"
+                                        "\n→ To see more result (Enter)\n→ To exit to the main menu (Q)\n").upper()
+                    if user_action == "S":
+                        continue
+                    elif user_action == "":
+                        page_index += 1
+                        print(row_print(new_card_list, "test", page_index))
+                    else:
+                        page_index = 0
+                        break
+            elif user_action == "":
+                page_index += 1
+                print(row_print(card_list, "test", page_index))
+            else:
+                break
