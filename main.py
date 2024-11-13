@@ -2,6 +2,16 @@ import random
 
 random_nbr = random.randint(0,100)
 
+def card_search(card_list_ref, s_criteria):
+    s_results = []
+    for cards in range(0, (len(card_list_ref) - 1) // 6):
+        for elements in range(0, 5):
+            if s_criteria in card_list_ref[6 * cards + elements]:
+                s_results += card_list_ref[6 * cards: 6 * cards + 6]
+    if s_results:
+        s_results += [""]
+    return s_results
+
 def row_print(card_list_ref, effect, page = 0):
     card_row = []
     row_print_result = ""
@@ -147,7 +157,9 @@ else:
     while True:
         user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n→ To exit (Q)\n").upper()
         if user_action == "S":
-            print()
+            search_criteria = input("You are searching for:\n")
+            new_card_list = card_search(card_list, search_criteria)
+            print(row_print(new_card_list, "test"))
         elif user_action == (""
                              ""):
             page_index += 1
