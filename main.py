@@ -30,7 +30,7 @@ def row_print(card_list_ref, effect, page = 0):
         elif (len(card_list_ref[page * 18:]) - 1) / 6 == 1:
             row_print_result += (card_row[card_height] + "\n")
         else:
-            return "No more cards in your collection."
+            return "No more cards in your collection could be found."
     return row_print_result
 
 def art_print(text, align):
@@ -165,15 +165,13 @@ else:
                                     "\n→ To see more result (Enter)\n→ To exit to the main menu (Q)\n").upper()
                 if user_action == "S":
                     continue
-                elif user_action == (""
-                                     ""):
+                elif user_action == "":
                     page_index += 1
                     print(row_print(new_card_list, "test", page_index))
                 else:
                     page_index = 0
                     break
-        elif user_action == (""
-                             ""):
+        elif user_action == "":
             page_index += 1
             print(row_print(card_list, "test", page_index))
         else:
