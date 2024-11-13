@@ -20,13 +20,13 @@ def row_print(card_list_ref, effect, page = 0):
             art_in_row = art_print(card_list_ref[6 * cards: 6 * cards + 5], card_list_ref[6 * cards + 5]).split("\n")
             card_effect_in_row = effect_line_return(effect)
             card_row += card_print(art_in_row, card_effect_in_row)
-    for card_height in range(0, 27):
+    for card_height in range(0, 31):
         if (len(card_list_ref[page * 18:]) - 1) / 6 >= 3:
-            row_print_result += (card_row[card_height] + "     " + card_row[card_height + 27] + "     " +
-                                 card_row[card_height + 54] + "\n")
+            row_print_result += (card_row[card_height] + card_row[card_height + 31] +
+                                 card_row[card_height + 62] + "\n")
         elif (len(card_list_ref[page * 18:]) - 1) / 6 == 2:
-            row_print_result += (card_row[card_height] + "     " +
-                                 card_row[card_height + 27] + "\n")
+            row_print_result += (card_row[card_height] +
+                                 card_row[card_height + 31] + "\n")
         elif (len(card_list_ref[page * 18:]) - 1) / 6 == 1:
             row_print_result += (card_row[card_height] + "\n")
         else:
@@ -47,8 +47,8 @@ def art_print(text, align):
                 art_result += ("│  " + " " * ((20 - len(text[new_lines])) // 2) + text[new_lines] +
                                " " * ((20 - len(text[new_lines])) // 2) + "  │\n")
             else:
-                art_result += ("│  \u202F\u200A" + " " * ((20 - len(text[new_lines])) // 2) + text[new_lines] +
-                               " " * ((20 - len(text[new_lines])) // 2) + "\u202F  │\n")
+                art_result += ("│   " + " " * ((20 - len(text[new_lines])) // 2) + text[new_lines] +
+                               " " * ((20 - len(text[new_lines])) // 2) + "  │\n")
     art_result += "└────────────────────────┘"
     return art_result
 
@@ -76,14 +76,14 @@ def card_print(art, effect):
                   "│ ████████████████████████████████████████████████ │",
                   "│ █                                              █ │",
                   "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │",
-                  "│ █           \u202F\u200A── DIGITAL DUEL CARD ──\u202F           █ │",
+                  "│ █            ── DIGITAL DUEL CARD ──           █ │",
                   "│ █               ░▒▓▓▓▓▓▓▓▓▓▓▓▓▒░               █ │",
                   "│ █                                              █ │",
                   "│ ████████████████████████████████████████████████ │",
                   "├──────────────────────────────────────────────────┤",
                   "│        Card Name: ███████████████████████        │",
                   "│        Card Type: ████████                       │",
-                  "│ ──────────────────────────────────────────────── │",
+                  "├──────────────────────────────────────────────────┤",
                   "│ █          " + art[0] + "          █ │",
                   "│ █          " + art[1] + "          █ │",
                   "│ █          " + art[2] + "          █ │",
@@ -98,6 +98,10 @@ def card_print(art, effect):
                   "│ █   " + effect[3] + "   █ │",
                   "├──────────────────────────────────────────────────┤",
                   "│             ATK / RES: █████ / █████             │",
+                  "├──────────────────────────────────────────────────┤",
+                  "│ █                                              █ │",
+                  "│ █                                              █ │",
+                  "│ ████████████████████████████████████████████████ │",
                   "└──────────────────────────────────────────────────┘"]
     return final_card
 
@@ -150,8 +154,8 @@ else:
     with open("Card_list.txt", "r", encoding="utf-8") as txt_file:
         card_list = txt_file.read().split("│")
 
-    print("───────────────────────────────────────────────────────────────────────────\u202F CARD\u200A"
-          " DATABASE \u202F───────────────────────────────────────────────────────────────────────────\n")
+    print("─────────────────────────────────────────────────────────────────────── CARD DATABASE"
+          " ──────────────────────────────────────────────────────────────────────\n")
     page_index = 0
     print(row_print(card_list, "test"))
     while True:
