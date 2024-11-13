@@ -128,6 +128,11 @@ while True:
                 else:
                     break
 
+            card_name = input("Enter a name for your card:\n")
+            card_type = input("Choose a type for your card:\n→ Program (P)\n→ Command (C)\n→ Function (F)\n").lower()
+            if card_type == "":
+                card_type = "p"
+
             art_list = art_print(user_text, align_choice).split("\n")
 
             card_effect = "This is an example."
