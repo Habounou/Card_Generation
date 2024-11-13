@@ -21,7 +21,7 @@ def row_print(card_list_ref, effect, page = 0):
             card_effect_in_row = effect_line_return(effect)
             card_row += card_print(art_in_row, card_effect_in_row)
     for card_height in range(0, 27):
-        if (len(card_list_ref[page * 18:]) - 1) / 6 == 3:
+        if (len(card_list_ref[page * 18:]) - 1) / 6 >= 3:
             row_print_result += (card_row[card_height] + "     " + card_row[card_height + 27] + "     " +
                                  card_row[card_height + 54] + "\n")
         elif (len(card_list_ref[page * 18:]) - 1) / 6 == 2:
