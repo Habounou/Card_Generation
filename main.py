@@ -6,18 +6,21 @@ def row_print(card_list_ref, effect, page = 0):
     card_row = []
     row_print_result = ""
     for cards in range(0 + page * 3, 3 + page * 3):
-        if (len(card_list_ref) - 1) / 18 >= (page + 1) * ((cards - page * 3) + 1) / 3:
+        if (len(card_list_ref[page * 18:]) - 1) / 6 >= (cards - page * 3) + 1:
             art_in_row = art_print(card_list_ref[6 * cards: 6 * cards + 5], card_list_ref[6 * cards + 5]).split("\n")
             card_effect_in_row = effect_line_return(effect)
             card_row += card_print(art_in_row, card_effect_in_row)
+    for card_height in range(0, 27):
+        if (len(card_list_ref[page * 18:]) - 1) / 6 == 3:
+            row_print_result += (card_row[card_height] + "     " + card_row[card_height + 27] + "     " +
+                                 card_row[card_height + 18] + "\n")
+        elif (len(card_list_ref[page * 18:]) - 1) / 6 == 2:
+            row_print_result += (card_row[card_height] + "     " +
+                                 card_row[card_height + 27] + "\n")
+        elif (len(card_list_ref[page * 18:]) - 1) / 6 == 1:
+            row_print_result += (card_row[card_height] + "\n")
         else:
-            card_row += " " * 28
-    if (len(card_list_ref) - 1) / 18 != page:
-        for card_height in range(0, len(card_row) // 3):
-            row_print_result += (card_row[card_height] + "     " + card_row[card_height + len(card_row) // 3] + "     " +
-                                card_row[card_height + 2 * len(card_row) // 3] + "\n")
-    else:
-        return "No more cards in your collection."
+            return "No more cards in your collection."
     return row_print_result
 
 def art_print(text, align):
@@ -130,22 +133,23 @@ if start_message.upper() == "C":
     random.seed(ascii_sum)
 
     print("Here is your card:")
-    card_effect = effect_line_return(str(random.randint(0,10000000)) + "This is a test")
+    card_effect = effect_line_return(str(random.randint(0,10000000)) + " This is a test")
     print("\n".join(card_print(art_list, card_effect)))
 
 else:
     with open("Card_list.txt", "r", encoding="utf-8") as txt_file:
         card_list = txt_file.read().split("│")
 
-    print("\u202F\u200A───────────────────────────────────────────────────────────────────────────"
-          " CARD DATABASE ───────────────────────────────────────────────────────────────────────────\u202F\n")
+    print("───────────────────────────────────────────────────────────────────────────\u202F CARD\u200A"
+          " DATABASE \u202F───────────────────────────────────────────────────────────────────────────\n")
     page_index = 0
     print(row_print(card_list, "test"))
     while True:
         user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n→ To exit (Q)\n").upper()
         if user_action == "S":
             print()
-        elif user_action == "":
+        elif user_action == (""
+                             ""):
             page_index += 1
             print(row_print(card_list, "test", page_index))
         else:
