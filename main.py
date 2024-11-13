@@ -157,9 +157,21 @@ else:
     while True:
         user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n→ To exit (Q)\n").upper()
         if user_action == "S":
-            search_criteria = input("You are searching for:\n")
-            new_card_list = card_search(card_list, search_criteria)
-            print(row_print(new_card_list, "test"))
+            while True:
+                search_criteria = input("You are searching for:\n")
+                new_card_list = card_search(card_list, search_criteria)
+                print(row_print(new_card_list, "test"))
+                user_action = input("→ To search for another card (S)"
+                                    "\n→ To see more result (Enter)\n→ To exit to the main menu (Q)\n").upper()
+                if user_action == "S":
+                    continue
+                elif user_action == (""
+                                     ""):
+                    page_index += 1
+                    print(row_print(new_card_list, "test", page_index))
+                else:
+                    page_index = 0
+                    break
         elif user_action == (""
                              ""):
             page_index += 1
