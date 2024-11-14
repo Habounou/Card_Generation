@@ -17,8 +17,8 @@ def card_search(card_list_ref, s_criteria):
     s_results = []
     for cards in range(0, (len(card_list_ref) - 1) // 6):
         for elements in range(0, 5):
-            if s_criteria in card_list_ref[6 * cards + elements]:
-                s_results += card_list_ref[6 * cards: 6 * cards + 6]
+            if s_criteria in card_list_ref[9 * cards + elements]:
+                s_results += card_list_ref[9 * cards: 9 * cards + 5] + card_list_ref[9 * cards + 6: 9 * cards + 9]
     if s_results:
         s_results += [""]
     return s_results
