@@ -70,18 +70,18 @@ def effect_line_return(effect):
     effect = effect.split()
     current_index = 0
     for rows in range(0, 6):
-        while len(spaced_effect[rows]) < 40:
+        while len(spaced_effect[rows]) < 42:
             if current_index < len(effect):
-                if len(spaced_effect[rows]) + len(effect[current_index]) + 1 <= 40:
+                if len(spaced_effect[rows]) + len(effect[current_index]) + 1 <= 42:
                     spaced_effect[rows] += effect[current_index] + " "
                     current_index += 1
-                elif len(spaced_effect[rows]) + len(effect[current_index]) <= 40:
+                elif len(spaced_effect[rows]) + len(effect[current_index]) <= 42:
                     spaced_effect[rows] += effect[current_index]
                     current_index += 1
                 else:
                     break
             else:
-                spaced_effect[rows] += " " * (40 - len(spaced_effect[rows]))
+                spaced_effect[rows] += " " * (42 - len(spaced_effect[rows]))
     return spaced_effect
 
 def card_print(art, effect, name, c_type, c_id):
@@ -111,16 +111,16 @@ def card_print(art, effect, name, c_type, c_id):
                   "│ █          " + art[5] + "          █ │",
                   "│ █          " + art[6] + "          █ │",
                   "│ █                   [EFFECT]                   █ │",
-                  "│ █   " + effect[0] + "   █ │",
-                  "│ █   " + effect[1] + "   █ │",
-                  "│ █   " + effect[2] + "   █ │",
-                  "│ █   " + effect[3] + "   █ │"]
+                  "│ █  " + effect[0] + "  █ │",
+                  "│ █  " + effect[1] + "  █ │",
+                  "│ █  " + effect[2] + "  █ │",
+                  "│ █  " + effect[3] + "  █ │"]
     if c_type.replace(" ", "") == "[PROGRAM]":
         final_card += ["├──────────────────────────────────────────────────┤",
                        "│               DMG / RES: " + dmg + " / " + res + "               │"]
     else:
-        final_card += ["│ █   " + effect[4] + "   █ │",
-                       "│ █   " + effect[5] + "   █ │"]
+        final_card += ["│ █  " + effect[4] + "  █ │",
+                       "│ █  " + effect[5] + "  █ │"]
     final_card += ["├──────────────────────────────────────────────────┤",
                    "│ █ " + str(c_id) + " █ │",
                    "│ █                                              █ │",
@@ -176,7 +176,7 @@ while True:
 
         ascii_sum = 0
         for nbr_lines in range(0, 5):
-            ascii_sum = sum(ord(char) for char in user_text[nbr_lines])
+            ascii_sum += sum(ord(char) for char in user_text[nbr_lines])
         ascii_sum_full = row_completion_c(str(ascii_sum), 44)
 
         with open("Card_list.txt", "a", encoding="utf-8") as txt_file:
@@ -197,7 +197,7 @@ while True:
         print("─────────────────────────────────────────────────────────────────────── CARD DATABASE"
               " ──────────────────────────────────────────────────────────────────────\n")
         page_index = 0
-        print(row_print(card_list, "test"))
+        print(row_print(card_list, "Test"))
         while True:
             user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n"
                                 "→ To exit this menu (Q)\n").upper()
@@ -212,12 +212,12 @@ while True:
                         continue
                     elif user_action == "":
                         page_index += 1
-                        print(row_print(new_card_list, "test", page_index))
+                        print(row_print(new_card_list, "Test", page_index))
                     else:
                         page_index = 0
                         break
             elif user_action == "":
                 page_index += 1
-                print(row_print(card_list, "test", page_index))
+                print(row_print(card_list, "Test", page_index))
             else:
                 break
