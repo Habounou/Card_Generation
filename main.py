@@ -2,11 +2,16 @@ import random
 
 random_nbr = random.randint(0,100)
 
-def row_completion(text):
-    complete_row = ""
-    for spaces in range(0, 23 - len(text)):
-        complete_row += " "
-    return complete_row
+def row_completion_l(text):
+    complete_row_l = text + " " * (48 - len(text))
+    return complete_row_l
+
+def row_completion_c(text, length = 48):
+    complete_row_c = ""
+    if len(text) % 2 != 0:
+        complete_row_c = " "
+    complete_row_c += " " * ((length - len(text)) // 2) + text + " " * ((length - len(text)) // 2)
+    return complete_row_c
 
 def card_search(card_list_ref, s_criteria):
     s_results = []
@@ -22,18 +27,20 @@ def row_print(card_list_ref, effect, page = 0):
     card_row = []
     row_print_result = ""
     for cards in range(0 + page * 3, 3 + page * 3):
-        if (len(card_list_ref[page * 24:]) - 1) / 8 >= (cards - page * 3) + 1:
-            art_in_row = art_print(card_list_ref[8 * cards: 8 * cards + 5], card_list_ref[8 * cards + 5]).split("\n")
+        if (len(card_list_ref[page * 27:]) - 1) / 9 >= (cards - page * 3) + 1:
+            art_in_row = art_print(card_list_ref[9 * cards: 9 * cards + 5], card_list_ref[9 * cards + 5]).split("\n")
             card_effect_in_row = effect_line_return(effect)
-            card_row += card_print(art_in_row, card_effect_in_row)
+            card_row += card_print(art_in_row, card_effect_in_row, row_completion_l(card_list_ref[9 * cards + 6]),
+                                   row_completion_c(card_list_ref[9 * cards + 7]),
+                                   row_completion_c(card_list_ref[9 * cards + 8], 44))
     for card_height in range(0, 31):
-        if (len(card_list_ref[page * 24:]) - 1) / 8 >= 3:
+        if (len(card_list_ref[page * 27:]) - 1) / 9 >= 3:
             row_print_result += (card_row[card_height] + card_row[card_height + 31] +
                                  card_row[card_height + 62] + "\n")
-        elif (len(card_list_ref[page * 24:]) - 1) / 8 == 2:
+        elif (len(card_list_ref[page * 27:]) - 1) / 9 == 2:
             row_print_result += (card_row[card_height] +
                                  card_row[card_height + 31] + "\n")
-        elif (len(card_list_ref[page * 24:]) - 1) / 8 == 1:
+        elif (len(card_list_ref[page * 27:]) - 1) / 9 == 1:
             row_print_result += (card_row[card_height] + "\n")
         else:
             return "No more cards in your collection could be found."
@@ -77,7 +84,7 @@ def effect_line_return(effect):
                 spaced_effect[rows] += " " * (40 - len(spaced_effect[rows]))
     return spaced_effect
 
-def card_print(art, effect, name, c_type):
+def card_print(art, effect, name, c_type, c_id):
     final_card = ["┌──────────────────────────────────────────────────┐",
                   "│ ████████████████████████████████████████████████ │",
                   "│ █                                              █ │",
@@ -87,8 +94,8 @@ def card_print(art, effect, name, c_type):
                   "│ █                                              █ │",
                   "│ ████████████████████████████████████████████████ │",
                   "├──────────────────────────────────────────────────┤",
-                  "│        Card Name: " + name + "        │",
-                  "│        Card Type: " + c_type + "        │",
+                  "│ " + name + " │",
+                  "│ " + c_type + " │",
                   "├──────────────────────────────────────────────────┤",
                   "│ █          " + art[0] + "          █ │",
                   "│ █          " + art[1] + "          █ │",
@@ -105,7 +112,7 @@ def card_print(art, effect, name, c_type):
                   "├──────────────────────────────────────────────────┤",
                   "│             ATK / RES: █████ / █████             │",
                   "├──────────────────────────────────────────────────┤",
-                  "│ █                                              █ │",
+                  "│ █ " + c_id + " █ │",
                   "│ █                                              █ │",
                   "│ ████████████████████████████████████████████████ │",
                   "└──────────────────────────────────────────────────┘"]
@@ -118,8 +125,8 @@ while True:
         while True:
             user_text = ["*********************"] * 5
             while len(user_text[0 and 1 and 2 and 3 and 4]) > 20:
-                user_text[0] = input("Enter 5 lines of characters to create a new card (maximum 20 characters per line):\n"
-                                     "           Maximum ↓\n")
+                user_text[0] = input("Enter 5 lines of characters to create a new card"
+                                     " (maximum 20 characters per line):\n           Maximum ↓\n")
                 for lines in range (0, 4):
                     user_text[lines + 1] = input("")
                 if len(user_text[0 and 1 and 2 and 3 and 4]) > 20:
@@ -137,36 +144,38 @@ while True:
             card_name = input("Enter a name for your card:\n").capitalize()
             card_type = input("Choose a type for your card:\n→ Program (P)\n→ Command (C)\n→ Function (F)\n").lower()
             if card_type == "f":
-                card_type = "Function"
+                card_type = "[FUNCTION]"
             elif card_type == "c":
-                card_type = "Command"
+                card_type = "[COMMAND]"
             else:
-                card_type = "Program"
-            card_name = row_completion(card_name)
-            card_type = row_completion(card_type)
+                card_type = "[PROGRAM]"
+            card_name_full = row_completion_l(card_name)
+            card_type_full = row_completion_c(card_type)
 
             art_list = art_print(user_text, align_choice).split("\n")
 
             card_effect = "This is an example."
             card_effect = effect_line_return(card_effect)
 
-            print("\n".join(card_print(art_list, card_effect)))
+            print("\n".join(card_print(art_list, card_effect, card_name_full, card_type_full, 000000)))
 
             redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n").upper()
             if redo != "N":
                 break
 
-        with open("Card_list.txt", "a", encoding="utf-8") as txt_file:
-            txt_file.write("│".join(user_text) + "│" + align_choice + "│" + card_name + "│" + card_type + "│")
-
         ascii_sum = 0
-        for nbr_lines in range (0, 5):
+        for nbr_lines in range(0, 5):
             ascii_sum = sum(ord(char) for char in user_text[nbr_lines])
         random.seed(ascii_sum)
+        ascii_sum_full = row_completion_c(str(ascii_sum), 44)
+
+        with open("Card_list.txt", "a", encoding="utf-8") as txt_file:
+            txt_file.write("│".join(user_text) + "│" + align_choice + "│" + card_name +
+                           "│" + card_type + "│" + str(ascii_sum) + "│")
 
         print("Here is your card:")
-        card_effect = effect_line_return(str(random.randint(0,10000000)) + " This is a test")
-        print("\n".join(card_print(art_list, card_effect)))
+        card_effect = effect_line_return(str(random.randint(1,10000000)) + " This is a test")
+        print("\n".join(card_print(art_list, card_effect, card_name_full, card_type_full, ascii_sum_full)))
 
     elif start_message.upper() == "Q":
         break
@@ -180,7 +189,8 @@ while True:
         page_index = 0
         print(row_print(card_list, "test"))
         while True:
-            user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n→ To exit (Q)\n").upper()
+            user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n"
+                                "→ To exit (Q)\n").upper()
             if user_action == "S":
                 while True:
                     search_criteria = input("You are searching for:\n")
