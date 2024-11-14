@@ -85,6 +85,12 @@ def effect_line_return(effect):
     return spaced_effect
 
 def card_print(art, effect, name, c_type, c_id):
+    random.seed(int(c_id.replace(" ", "")))
+    dmg = str(random.randint(0, 99) * 10)
+    random.seed(int(c_id.replace(" ", "")) * 2)
+    res = str(random.randint(0, 99) * 10)
+    dmg = " " * (3 - len(dmg)) + dmg
+    res = res + " " * (3 - len(res))
     final_card = ["┌──────────────────────────────────────────────────┐",
                   "│ ████████████████████████████████████████████████ │",
                   "│ █                                              █ │",
@@ -111,7 +117,7 @@ def card_print(art, effect, name, c_type, c_id):
                   "│ █   " + effect[3] + "   █ │"]
     if c_type.replace(" ", "") == "[PROGRAM]":
         final_card += ["├──────────────────────────────────────────────────┤",
-                       "│             ATK / RES: █████ / █████             │"]
+                       "│               DMG / RES: " + dmg + " / " + res + "               │"]
     else:
         final_card += ["│ █   " + effect[4] + "   █ │",
                        "│ █   " + effect[5] + "   █ │"]
@@ -171,7 +177,6 @@ while True:
         ascii_sum = 0
         for nbr_lines in range(0, 5):
             ascii_sum = sum(ord(char) for char in user_text[nbr_lines])
-        random.seed(ascii_sum)
         ascii_sum_full = row_completion_c(str(ascii_sum), 44)
 
         with open("Card_list.txt", "a", encoding="utf-8") as txt_file:
@@ -179,7 +184,7 @@ while True:
                            "│" + card_type + "│" + str(ascii_sum) + "│")
 
         print("Here is your card:")
-        card_effect = effect_line_return(str(random.randint(1,10000000)) + " This is a test")
+        card_effect = effect_line_return("This is a test")
         print("\n".join(card_print(art_list, card_effect, card_name_full, card_type_full, ascii_sum_full)))
 
     elif start_message.upper() == "Q":
