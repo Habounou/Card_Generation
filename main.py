@@ -66,10 +66,10 @@ def art_print(text, align):
     return art_result
 
 def effect_line_return(effect):
-    spaced_effect = ["", "", "", ""]
+    spaced_effect = ["", "", "", "", "", ""]
     effect = effect.split()
     current_index = 0
-    for rows in range(0, 4):
+    for rows in range(0, 6):
         while len(spaced_effect[rows]) < 40:
             if current_index < len(effect):
                 if len(spaced_effect[rows]) + len(effect[current_index]) + 1 <= 40:
@@ -108,14 +108,18 @@ def card_print(art, effect, name, c_type, c_id):
                   "│ █   " + effect[0] + "   █ │",
                   "│ █   " + effect[1] + "   █ │",
                   "│ █   " + effect[2] + "   █ │",
-                  "│ █   " + effect[3] + "   █ │",
-                  "├──────────────────────────────────────────────────┤",
-                  "│             ATK / RES: █████ / █████             │",
-                  "├──────────────────────────────────────────────────┤",
-                  "│ █ " + c_id + " █ │",
-                  "│ █                                              █ │",
-                  "│ ████████████████████████████████████████████████ │",
-                  "└──────────────────────────────────────────────────┘"]
+                  "│ █   " + effect[3] + "   █ │"]
+    if c_type.replace(" ", "") == "[PROGRAM]":
+        final_card += ["├──────────────────────────────────────────────────┤",
+                       "│             ATK / RES: █████ / █████             │"]
+    else:
+        final_card += ["│ █   " + effect[4] + "   █ │",
+                       "│ █   " + effect[5] + "   █ │"]
+    final_card += ["├──────────────────────────────────────────────────┤",
+                   "│ █ " + str(c_id) + " █ │",
+                   "│ █                                              █ │",
+                   "│ ████████████████████████████████████████████████ │",
+                   "└──────────────────────────────────────────────────┘"]
     return final_card
 
 print("Welcome to the Digital Duel Card Creator. What are you here for?")
@@ -157,7 +161,8 @@ while True:
             card_effect = "This is an example."
             card_effect = effect_line_return(card_effect)
 
-            print("\n".join(card_print(art_list, card_effect, card_name_full, card_type_full, 000000)))
+            print("\n".join(card_print(art_list, card_effect, card_name_full, card_type_full,
+                                       row_completion_c("000000", 44))))
 
             redo = input("Are you satisfied with this rendering? (yes:Y/no:N)\n").upper()
             if redo != "N":
@@ -190,14 +195,14 @@ while True:
         print(row_print(card_list, "test"))
         while True:
             user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n"
-                                "→ To exit (Q)\n").upper()
+                                "→ To exit this menu (Q)\n").upper()
             if user_action == "S":
                 while True:
                     search_criteria = input("You are searching for:\n")
                     new_card_list = card_search(card_list, search_criteria)
                     print(row_print(new_card_list, "test"))
                     user_action = input("→ To search for another card (S)"
-                                        "\n→ To see more result (Enter)\n→ To exit to the main menu (Q)\n").upper()
+                                        "\n→ To see more result (Enter)\n→ To exit this menu (Q)\n").upper()
                     if user_action == "S":
                         continue
                     elif user_action == "":
