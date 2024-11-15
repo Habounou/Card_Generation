@@ -12,11 +12,11 @@ def row_completion_c(text, length = 48):
     complete_row_c += " " * ((length - len(text)) // 2) + text + " " * ((length - len(text)) // 2)
     return complete_row_c
 
-def card_search(card_list_ref, s_criteria, s_min = 0, s_max = 5):
+def card_search(card_list_ref, s_criteria = None, s_min = 0, s_max = 5, type_criteria = None):
     s_results = []
     for cards in range(0, (len(card_list_ref) - 1) // 9):
         for elements in range(s_min, s_max):
-            if s_criteria in card_list_ref[9 * cards + elements]:
+            if s_criteria in card_list_ref[9 * cards + elements] or type_criteria in card_list_ref[9 * cards + 7]:
                 s_results += card_list_ref[9 * cards: 9 * cards + 9]
                 break
             if s_min == 8 and s_max == 9 and s_criteria in create_effect(card_list_ref[9 * cards + 8]):
@@ -206,29 +206,40 @@ while True:
             user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n"
                                 "→ To exit this menu (Q)\n").upper()
             if user_action == "S":
+                search_criteria = [None, None]
                 while True:
                     user_action = input("What type of search do you want to do?\n→ By card name (N)"
                                         "\n→ By card type (T)\n→ By card artwork (A)\n→ By card effect (E)\n").upper()
-                    if user_action == "A":
-                        search_criteria = input("You are searching for:\n")
-                        new_card_list = card_search(card_list, search_criteria)
-                    elif user_action == "T":
-                        search_criteria = input("You are searching for:\n→ A [PROGRAM] card (P)"
-                                                "\n→ A [COMMAND] card (C)\n→ A [FUNCTION] card (F)\n").lower()
-                        if search_criteria == "f":
-                            search_criteria = "[FUNCTION]"
-                        elif search_criteria == "c":
-                            search_criteria = "[COMMAND]"
+                    while True:
+                        if user_action == "A":
+                            search_criteria[0] = input("You are searching for:\n")
+                            new_card_list = card_search(card_list, search_criteria[0],
+                                                        type_criteria = search_criteria[1])
+                            break
+                        elif user_action == "T":
+                            search_criteria[1] = input("You are searching for:\n→ A [PROGRAM] card (P)"
+                                                    "\n→ A [COMMAND] card (C)\n→ A [FUNCTION] card (F)\n").lower()
+                            if search_criteria[1] == "f":
+                                search_criteria[1] = "[FUNCTION]"
+                            elif search_criteria[1] == "c":
+                                search_criteria[1] = "[COMMAND]"
+                            else:
+                                search_criteria[1] = "[PROGRAM]"
+                            user_action = input("Do you want to apply another filter on your search? (yes:Y/no:N)\n")
+                            if user_action == "N":
+                                new_card_list = card_search(card_list, type_criteria = search_criteria[1])
+                                break
+                        elif user_action == "E":
+                            search_criteria[0] = input("You are searching for:\n")
+                            new_card_list = card_search(card_list, search_criteria[0], 8, 9,
+                                                        type_criteria = search_criteria[1])
+                            break
                         else:
-                            search_criteria = "[PROGRAM]"
-                        new_card_list = card_search(card_list, search_criteria, 7, 8)
-                    elif user_action == "E":
-                        search_criteria = input("You are searching for:\n")
-                        new_card_list = card_search(card_list, search_criteria, 8, 9)
-                    else:
-                        search_criteria = input("You are searching for:\n")
-                        new_card_list = card_search(card_list, search_criteria, 6, 7)
-                    print(row_print(new_card_list,))
+                            search_criteria[0] = input("You are searching for:\n")
+                            new_card_list = card_search(card_list, search_criteria[0], 6, 7,
+                                                        type_criteria = search_criteria[1])
+                            break
+                    print(row_print(new_card_list))
                     user_action = input("→ To search for another card (S)"
                                         "\n→ To see more result (Enter)\n→ To exit this menu (Q)\n").upper()
                     if user_action == "S":
