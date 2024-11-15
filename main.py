@@ -1,6 +1,5 @@
 import random
-
-random_nbr = random.randint(0,100)
+from game_effects import create_effect
 
 def row_completion_l(text):
     complete_row_l = text + " " * (48 - len(text))

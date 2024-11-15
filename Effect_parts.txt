@@ -1,0 +1,125 @@
+When this Program enters the Mainframe
+[specific card] in Mainframe
+Corrupt
+1 opposing Program
+Draw 1 card
+When a Program is overclocked
+Any Program in the Mainframe
+Disable
+All Programs on the opponent’s Mainframe
+Skip your next draw phase
+When this card is destroyed
+This Program
+Transfer its effect
+1 Program on your Mainframe
+Both players lose 500 System Points
+During your end phase
+All Programs in play
+Overclock
+All Programs on your Mainframe
+Corrupt 1 opposing Program
+When this card is overclocked
+Any Program
+Deactivate abilities
+1 Program on your Mainframe
+Draw 1 card
+During your draw phase
+Any Command in hand
+Search your deck for
+1 [specific card]
+Discard 1 card
+When a card becomes Static
+This Program
+Corrupt
+1 Program on opponent’s Mainframe
+Draw 2 cards
+When a Command is activated
+Opponent's Command
+Search
+Opponent's deck for 1 Program
+Add the card to your hand
+When this Program is sent to the Mainframe
+This Program
+Overclock
+1 Program on your Mainframe
+Reduce the target’s power by 300 points
+When an effect targets this Program
+Any opposing Program
+Disable
+Opposing Program targeting this Program
+Reduce opponent’s System Points by 300
+When this Program’s attack is blocked
+This Program
+Loop
+This Program's effect once more
+Corrupt 1 opposing Program
+When a Program is destroyed
+[specific card] in the Mainframe
+Search
+Your deck for 1 Program
+Discard 1 card
+When a Program attacks directly
+This Program
+Gain System Points
+Equal to the attacking Program’s power
+Make the attacking Program Static
+At the beginning of your turn
+Any Program on your Mainframe
+Restore
+1 Static Program
+Draw 1 card
+During your main phase
+Any Program on your Mainframe
+Decrease power
+All opposing Programs
+Search your deck for 1 [specific card]
+When this card is corrupted
+This Program
+Transfer ability
+1 Program on your Mainframe
+Gain 500 System Points
+When an opponent’s Program attacks
+Any opposing Program
+Disable
+Opponent’s Program
+Lose 200 System Points
+When this Program is removed from play
+This Program
+Search
+Your deck for 1 Command
+Draw 2 cards
+When this Program is activated
+This Program
+Restore
+1 Program on your Mainframe
+Reduce its power by 200
+When you play a Function
+Any Function
+Corrupt
+Opposing Programs in play
+Opponent draws 1 card
+When an opposing card becomes Static
+Any opposing Program
+Loop
+Effect of 1 Program on your Mainframe
+Draw 1 card
+When this Program is overclocked
+This Program
+Add 1 Command
+From your graveyard to your hand
+Skip your next draw phase
+When you search your deck
+Any Program in hand
+Gain System Points
+500 points
+Opponent searches their deck for 1 Command
+During the opponent’s end phase
+All Programs in play
+Search
+Opponent’s deck for 1 Command
+Send it to their graveyard
+When an opposing Program is deployed
+Any opposing Program
+Disable
+Opponent’s new Program
+This Program becomes Static
