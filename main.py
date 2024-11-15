@@ -14,14 +14,23 @@ def row_completion_c(text, length = 48):
 
 def card_search(card_list_ref, s_criteria = None, s_min = 0, s_max = 5, type_criteria = None):
     s_results = []
+    operator = "or"
+    if s_criteria and type_criteria:
+        operator = "and"
     for cards in range(0, (len(card_list_ref) - 1) // 9):
         for elements in range(s_min, s_max):
-            if s_criteria in card_list_ref[9 * cards + elements] or type_criteria in card_list_ref[9 * cards + 7]:
-                s_results += card_list_ref[9 * cards: 9 * cards + 9]
-                break
             if s_min == 8 and s_max == 9 and s_criteria in create_effect(card_list_ref[9 * cards + 8]):
                 s_results += card_list_ref[9 * cards: 9 * cards + 9]
                 break
+            else:
+                if operator == "or":
+                    if s_criteria in card_list_ref[9 * cards + elements] or type_criteria in card_list_ref[9 * cards + 7]:
+                        s_results += card_list_ref[9 * cards: 9 * cards + 9]
+                        break
+                if operator == "and":
+                    if s_criteria in card_list_ref[9 * cards + elements] and type_criteria in card_list_ref[9 * cards + 7]:
+                        s_results += card_list_ref[9 * cards: 9 * cards + 9]
+                        break
     if s_results:
         s_results += [""]
     return s_results
