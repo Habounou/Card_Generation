@@ -19,4 +19,4 @@ def create_effect(raw_id):
     final_effect = " ".join(final_effect) + "."
     return final_effect
 
-print(create_effect(22))
+print(create_effect(0))

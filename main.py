@@ -12,25 +12,27 @@ def row_completion_c(text, length = 48):
     complete_row_c += " " * ((length - len(text)) // 2) + text + " " * ((length - len(text)) // 2)
     return complete_row_c
 
-def card_search(card_list_ref, s_criteria):
+def card_search(card_list_ref, s_criteria, s_min = 0, s_max = 5):
     s_results = []
     for cards in range(0, (len(card_list_ref) - 1) // 9):
-        for elements in range(0, 9):
-            if elements != 5:
-                if s_criteria in card_list_ref[9 * cards + elements]:
-                    s_results += card_list_ref[9 * cards: 9 * cards + 9]
-                    break
+        for elements in range(s_min, s_max):
+            if s_criteria in card_list_ref[9 * cards + elements]:
+                s_results += card_list_ref[9 * cards: 9 * cards + 9]
+                break
+            if s_min == 8 and s_max == 9 and s_criteria in create_effect(card_list_ref[9 * cards + 8]):
+                s_results += card_list_ref[9 * cards: 9 * cards + 9]
+                break
     if s_results:
         s_results += [""]
     return s_results
 
-def row_print(card_list_ref, effect, page = 0):
+def row_print(card_list_ref, page = 0):
     card_row = []
     row_print_result = ""
     for cards in range(0 + page * 3, 3 + page * 3):
         if (len(card_list_ref[page * 27:]) - 1) / 9 >= (cards - page * 3) + 1:
             art_in_row = art_print(card_list_ref[9 * cards: 9 * cards + 5], card_list_ref[9 * cards + 5]).split("\n")
-            card_effect_in_row = effect_line_return(effect)
+            card_effect_in_row = effect_line_return(create_effect(int(card_list_ref[9 * cards + 8])))
             card_row += card_print(art_in_row, card_effect_in_row, row_completion_l(card_list_ref[9 * cards + 6]),
                                    row_completion_c(card_list_ref[9 * cards + 7]),
                                    row_completion_c(card_list_ref[9 * cards + 8], 44))
@@ -82,7 +84,8 @@ def effect_line_return(effect):
                 else:
                     break
             else:
-                spaced_effect[rows] += " " * (42 - len(spaced_effect[rows]))
+                break
+        spaced_effect[rows] = spaced_effect[rows].ljust(42)
     return spaced_effect
 
 def card_print(art, effect, name, c_type, c_id):
@@ -185,7 +188,7 @@ while True:
                            "│" + card_type + "│" + str(ascii_sum) + "│")
 
         print("Here is your card:")
-        card_effect = effect_line_return("This is a test")
+        card_effect = effect_line_return(create_effect(ascii_sum))
         print("\n".join(card_print(art_list, card_effect, card_name_full, card_type_full, ascii_sum_full)))
 
     elif start_message.upper() == "Q":
@@ -198,27 +201,46 @@ while True:
         print("─────────────────────────────────────────────────────────────────────── CARD DATABASE"
               " ──────────────────────────────────────────────────────────────────────\n")
         page_index = 0
-        print(row_print(card_list, "Test"))
+        print(row_print(card_list))
         while True:
             user_action = input("→ To search a specific card (S)\n→ To see more result (Enter)\n"
                                 "→ To exit this menu (Q)\n").upper()
             if user_action == "S":
                 while True:
-                    search_criteria = input("You are searching for:\n")
-                    new_card_list = card_search(card_list, search_criteria)
-                    print(row_print(new_card_list, "test"))
+                    user_action = input("What type of search do you want to do?\n→ By card name (N)"
+                                        "\n→ By card type (T)\n→ By card artwork (A)\n→ By card effect (E)\n").upper()
+                    if user_action == "A":
+                        search_criteria = input("You are searching for:\n")
+                        new_card_list = card_search(card_list, search_criteria)
+                    elif user_action == "T":
+                        search_criteria = input("You are searching for:\n→ A [PROGRAM] card (P)"
+                                                "\n→ A [COMMAND] card (C)\n→ A [FUNCTION] card (F)\n").lower()
+                        if search_criteria == "f":
+                            search_criteria = "[FUNCTION]"
+                        elif search_criteria == "c":
+                            search_criteria = "[COMMAND]"
+                        else:
+                            search_criteria = "[PROGRAM]"
+                        new_card_list = card_search(card_list, search_criteria, 7, 8)
+                    elif user_action == "E":
+                        search_criteria = input("You are searching for:\n")
+                        new_card_list = card_search(card_list, search_criteria, 8, 9)
+                    else:
+                        search_criteria = input("You are searching for:\n")
+                        new_card_list = card_search(card_list, search_criteria, 6, 7)
+                    print(row_print(new_card_list,))
                     user_action = input("→ To search for another card (S)"
                                         "\n→ To see more result (Enter)\n→ To exit this menu (Q)\n").upper()
                     if user_action == "S":
                         continue
                     elif user_action == "":
                         page_index += 1
-                        print(row_print(new_card_list, "Test", page_index))
+                        print(row_print(new_card_list, page_index))
                     else:
                         page_index = 0
                         break
             elif user_action == "":
                 page_index += 1
-                print(row_print(card_list, "Test", page_index))
+                print(row_print(card_list, page_index))
             else:
                 break
