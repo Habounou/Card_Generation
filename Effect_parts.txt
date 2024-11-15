@@ -1,5 +1,5 @@
 When this Program enters the Mainframe
-[specific card] in Mainframe
+[RANDOM CARD] in Mainframe
 Corrupt
 1 opposing Program
 Draw 1 card
@@ -26,7 +26,7 @@ Draw 1 card
 During your draw phase
 Any Command in hand
 Search your deck for
-1 [specific card]
+1 [RANDOM CARD]
 Discard 1 card
 When a card becomes Static
 This Program
@@ -54,7 +54,7 @@ Loop
 This Program's effect once more
 Corrupt 1 opposing Program
 When a Program is destroyed
-[specific card] in the Mainframe
+[RANDOM CARD] in the Mainframe
 Search
 Your deck for 1 Program
 Discard 1 card
@@ -72,7 +72,7 @@ During your main phase
 Any Program on your Mainframe
 Decrease power
 All opposing Programs
-Search your deck for 1 [specific card]
+Search your deck for 1 [RANDOM CARD]
 When this card is corrupted
 This Program
 Transfer ability
