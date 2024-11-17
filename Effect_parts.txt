@@ -46,80 +46,80 @@ Reduce the damage value of a target Program by 300 points
 *p*When an effect targets this Program
 Any opposing Program
 Disables
-Opposing Program if it targets this Program
+*p*Opposing Program if it targets this Program
 Reduce opponent’s System Points by 300
-When this Program’s attack is blocked
-This Program
-Loop
-This Program's effect once more
+*p*When this Program’s attack is blocked
+*p*This Program
+Loops
+*p*This Program's effects
 Corrupt 1 opposing Program
 When a Program is destroyed
-[RANDOM CARD] in the Mainframe
-Search
-Your deck for 1 Program
+A [RANDOM CARD] in the Mainframe
+Searches your deck for
+1 Program
 Discard 1 card
 When a Program attacks directly
-This Program
-Gain System Points
-Equal to the attacking Program’s damage value
-Make the attacking Program Static
+*p*This Program
+*u*Gain System Points
+**********
+*a*Make the attacking Program Static
 At the beginning of your turn
 Any Program on your Mainframe
-Restore
+Restores
 1 Static Program
 Draw 1 card
 During your Work phase
 Any Program on your Mainframe
-Decrease damage value
+Decreases the damage value of
 All opposing Programs
 Search your deck for 1 [RANDOM CARD]
 When this card is corrupted
-This Program
-Transfer ability
+*p*This Program
+Transfers it's effects to
 1 Program on your Mainframe
 Gain 500 System Points
 When an opponent’s Program attacks
 Any opposing Program
-Disable
+Disables
 Opponent’s Program
 Lose 200 System Points
-When this Program is removed from play
-This Program
-Search
+*p*When this Program is removed from play
+*p*This Program
+Searches
 Your deck for 1 Command
 Draw 2 cards
-When this Program is activated
-This Program
-Restore
+*p*When this Program is activated
+*p*This Program
+Restores
 1 Program on your Mainframe
-Reduce its damage value by 200
+Reduce the damage value of a Program by 200
 When you play a Function
 Any Function
-Corrupt
-Opposing Programs in play
+Corrupts
+An opposing Program in play
 Opponent draws 1 card
 When an opposing card becomes Static
 Any opposing Program
-Loop
-Effect of 1 Program on your Mainframe
+Loops
+**********
 Draw 1 card
-When this Program is overclocked
-This Program
-Add 1 Command
-From your graveyard to your hand
+*p*When this Program is overclocked
+*p*This Program
+Adds 1 Command
+From your scrapyard to your hand
 Skip your next Loading phase
 When you search your deck
-Any Program in hand
-Gain System Points
-500 points
+Any Program in your hand
+*p*Gains 500 damage points
+**********
 Opponent searches their deck for 1 Command
 During the opponent’s Shut Down phase
 All Programs in play
-Search
+Searches
 Opponent’s deck for 1 Command
-Send it to their graveyard
+Send 1 Program from your deck to your scrapyard
 When an opposing Program is deployed
 Any opposing Program
-Disable
-Opponent’s new Program
-This Program becomes Static
+Disables
+Opponent’s Program
+*p*This Program becomes Static
