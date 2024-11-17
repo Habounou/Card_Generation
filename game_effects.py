@@ -8,6 +8,8 @@ def create_effect(raw_id):
         effect_part = [""] * (len(effect) // 5)
         for different_eff in range(0, len(effect) // 5):
             effect_part[different_eff] = effect[different_eff * 5 + parts]
+            effect_part[different_eff] = (effect_part[different_eff].replace("*p*", "")
+                                          .replace("*u*", "").replace("*a*", ""))
             if parts != 0:
                 effect_part[different_eff] = effect_part[different_eff][0].lower() + effect_part[different_eff][1:]
         random.seed(int(raw_id) * (parts + 1))
