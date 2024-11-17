@@ -24,11 +24,17 @@ def card_search(card_list_ref, s_criteria = None, s_min = 0, s_max = 5, type_cri
                 break
             else:
                 if operator == "or":
-                    if s_criteria in card_list_ref[9 * cards + elements] or type_criteria in card_list_ref[9 * cards + 7]:
-                        s_results += card_list_ref[9 * cards: 9 * cards + 9]
-                        break
+                    if s_criteria:
+                        if s_criteria in card_list_ref[9 * cards + elements]:
+                            s_results += card_list_ref[9 * cards: 9 * cards + 9]
+                            break
+                    if type_criteria:
+                        if type_criteria in card_list_ref[9 * cards + 7]:
+                            s_results += card_list_ref[9 * cards: 9 * cards + 9]
+                            break
                 if operator == "and":
-                    if s_criteria in card_list_ref[9 * cards + elements] and type_criteria in card_list_ref[9 * cards + 7]:
+                    if (s_criteria in card_list_ref[9 * cards + elements] and
+                            type_criteria in card_list_ref[9 * cards + 7]):
                         s_results += card_list_ref[9 * cards: 9 * cards + 9]
                         break
     if s_results:
@@ -55,7 +61,7 @@ def row_print(card_list_ref, page = 0):
         elif (len(card_list_ref[page * 27:]) - 1) / 9 == 1:
             row_print_result += (card_row[card_height] + "\n")
         else:
-            return "No more cards in your collection could be found."
+            return "No cards in your collection could be found."
     return row_print_result
 
 def art_print(text, align):
@@ -234,10 +240,16 @@ while True:
                                 search_criteria[1] = "[COMMAND]"
                             else:
                                 search_criteria[1] = "[PROGRAM]"
-                            user_action = input("Do you want to apply another filter on your search? (yes:Y/no:N)\n")
+                            user_action = input("Do you want to apply another filter on your search?"
+                                                " (yes:Y/no:N)\n").upper()
                             if user_action == "N":
                                 new_card_list = card_search(card_list, type_criteria = search_criteria[1])
                                 break
+                            else:
+                                user_action = input("What type of search do you want to do?\n→ By card name (N)"
+                                                    "\n→ By card artwork (A)\n→ By card effect (E)\n").upper()
+                                if user_action == "T":
+                                    user_action = "N"
                         elif user_action == "E":
                             search_criteria[0] = input("You are searching for:\n")
                             new_card_list = card_search(card_list, search_criteria[0], 8, 9,
