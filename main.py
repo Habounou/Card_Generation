@@ -19,7 +19,8 @@ def card_search(card_list_ref, s_criteria = None, s_min = 0, s_max = 5, type_cri
         operator = "and"
     for cards in range(0, (len(card_list_ref) - 1) // 9):
         for elements in range(s_min, s_max):
-            if s_min == 8 and s_max == 9 and s_criteria in create_effect(card_list_ref[9 * cards + 8]):
+            if s_min == 8 and s_max == 9 and s_criteria in create_effect(card_list_ref[9 * cards + 8],
+                                                                         card_list_ref[9 * cards + 7]):
                 s_results += card_list_ref[9 * cards: 9 * cards + 9]
                 break
             else:
@@ -47,7 +48,8 @@ def row_print(card_list_ref, page = 0):
     for cards in range(0 + page * 3, 3 + page * 3):
         if (len(card_list_ref[page * 27:]) - 1) / 9 >= (cards - page * 3) + 1:
             art_in_row = art_print(card_list_ref[9 * cards: 9 * cards + 5], card_list_ref[9 * cards + 5]).split("\n")
-            card_effect_in_row = effect_line_return(create_effect(int(card_list_ref[9 * cards + 8])))
+            card_effect_in_row = effect_line_return(create_effect(card_list_ref[9 * cards + 8],
+                                                                  card_list_ref[9 * cards + 7]))
             card_row += card_print(art_in_row, card_effect_in_row, row_completion_l(card_list_ref[9 * cards + 6]),
                                    row_completion_c(card_list_ref[9 * cards + 7]),
                                    row_completion_c(card_list_ref[9 * cards + 8], 44))
@@ -203,7 +205,7 @@ while True:
                            "│" + card_type + "│" + str(ascii_sum) + "│")
 
         print("Here is your card:")
-        card_effect = effect_line_return(create_effect(ascii_sum))
+        card_effect = effect_line_return(create_effect(ascii_sum, card_type))
         print("\n".join(card_print(art_list, card_effect, card_name_full, card_type_full, ascii_sum_full)))
 
     elif start_message.upper() == "Q":
