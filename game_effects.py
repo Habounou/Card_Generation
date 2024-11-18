@@ -16,8 +16,15 @@ def create_effect(raw_id, c_type):
                                           .replace("*u*", "").replace("*a*", ""))
             if parts != 0 and effect_part[different_eff]:
                 effect_part[different_eff] = effect_part[different_eff][0].lower() + effect_part[different_eff][1:]
-        if "" in effect_part:
-            effect_part.remove("")
+        scan = 0
+        while True:
+            if effect_part[scan] == "":
+                del effect_part[scan]
+                scan -= 1
+            if scan + 1 < len(effect_part):
+                scan += 1
+            else:
+                break
         random.seed(int(raw_id) * (parts + 1))
         final_effect[parts] += random.choice(effect_part)
         if parts == 0:
