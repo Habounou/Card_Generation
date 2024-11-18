@@ -34,4 +34,4 @@ def create_effect(raw_id, c_type):
     final_effect = " ".join(final_effect) + "."
     return final_effect
 
-print(create_effect(0, "[FUNCTION]"))
+# print(create_effect(0, "[FUNCTION]"))
