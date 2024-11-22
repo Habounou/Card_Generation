@@ -266,7 +266,7 @@ while True:
                     user_action = input("→ To search for another card (S)"
                                         "\n→ To see more result (Enter)\n→ To exit this menu (Q)\n").upper()
                     if user_action == "S":
-                        continue
+                        pass
                     elif user_action == "":
                         page_index += 1
                         print(row_print(new_card_list, page_index))
