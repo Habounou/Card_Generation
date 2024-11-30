@@ -22,7 +22,7 @@ def login():
 
     exit_button = customtkinter.CTkButton(master=frame2, text="⨉", fg_color="transparent", hover_color="#C21A09",
                                           corner_radius=0, width=40, height=24, command=lambda: exit())
-    exit_button.grid(row=0, column=0, sticky="ne", padx=1)
+    exit_button.grid(row=0, column=0, sticky="ne", padx=2)
 
     label = customtkinter.CTkLabel(master=frame, text="Welcome", font=("Roboto", 24))
     label.grid(row=1, column=0, pady=30, padx=10)
@@ -43,19 +43,31 @@ def screen1():
     frame3 = customtkinter.CTkFrame(master=app, width=1400, height=800)
     frame3.grid(row=0, column=0, pady=20, padx=60)
     frame3.grid_propagate(False)
-    frame3.grid_rowconfigure(1, weight=1)
+    frame3.grid_columnconfigure(0, weight=1)
+    frame3.grid_rowconfigure(0, weight=1)
 
     def return_login():
         login()
         frame3.destroy()
 
-    return_button = customtkinter.CTkButton(master=frame3, text="↩ Back to login", fg_color="#CFCFCF",
-                                            text_color="#333333", hover_color="#C21A09", width=80, height=24,
-                                            command=return_login)
-    return_button.grid(row=1, column=0, sticky="sw", pady=12, padx=10)
+    frame4 = customtkinter.CTkFrame(master=frame3, width=1400, height=30, corner_radius=0, fg_color="#1167B1")
+    frame4.grid(row=0, column=0, sticky="ne")
+    frame4.grid_propagate(False)
+    frame4.grid_columnconfigure(0, weight=1)
 
-    label = customtkinter.CTkLabel(master=frame3, text="Digital Duel Card Creator", font=("Roboto", 32))
-    label.grid(row=0, column=0, pady=20, padx=15)
+    return_button = customtkinter.CTkButton(master=frame4, text="↩", font=("Roboto", 28), fg_color="transparent",
+                                            hover_color="#C21A09", corner_radius=0, width=50, height=28,
+                                            command=return_login)
+    return_button.grid(row=0, column=0, sticky="ne")
+    return_button.grid_propagate(False)
+
+    frame5 = customtkinter.CTkFrame(master=frame3, width=400, height=700)
+    frame5.grid(row=0, column=0, sticky="nw", pady=50, padx=20)
+    frame5.grid_propagate(False)
+    frame5.grid_columnconfigure(0, weight=1)
+
+    label = customtkinter.CTkLabel(master=frame5, text="Digital Duel Card Creator", font=("Roboto", 32))
+    label.grid(row=0, column=0, sticky="n", pady=12)
 
 login()
 
