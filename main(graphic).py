@@ -6,7 +6,7 @@ customtkinter.set_default_color_theme("blue")
 app = customtkinter.CTk()
 app.grid_rowconfigure(0, weight=1)
 app.grid_columnconfigure(0, weight=1)
-app.after(0, lambda:app.state('zoomed'))
+app.after(0, lambda:app.state("zoomed"))
 
 def login():
     frame = customtkinter.CTkFrame(master=app, width=250, height=350)
