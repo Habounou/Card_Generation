@@ -36,8 +36,8 @@ if str(card_keywords[0]) != "nan":
         print(card_keywords[0])
 
 nbr_effects = rand.randint(1,3)
-for i in range(0,nbr_effects + 1):
-    vanilla_effect = rand.randint(0,7)
+for i in range(0,nbr_effects):
+    vanilla_effect = rand.randint(0,0)
     final_effects = ""
     if not vanilla_effect:
         for category in card_effects:
@@ -47,6 +47,7 @@ for i in range(0,nbr_effects + 1):
                     if str(element) != "nan":
                         temp_effects.append(element)
                 card_effects[category] = temp_effects
+
             rand.shuffle(card_effects[category])
 
             if str(card_effects[category][0]) != "nan":
@@ -54,6 +55,10 @@ for i in range(0,nbr_effects + 1):
                     final_effects += ", but"
                 elif category == "Action":
                     final_effects += " :"
+                elif category == "Action Target":
+                    for j in range(0, str(card_effects[category]).count("specific card tag")):
+                        card_effects[category][0] = (
+                            (card_effects[category][0]).replace("specific card tag", rand.choice(card_name), 1))
                 elif category == "Spontaneous Trigger":
                     if str(card_effects["Trigger"][0]) == "SPONTANEOUS":
                         final_effects += " " + str(card_effects[category][0])
