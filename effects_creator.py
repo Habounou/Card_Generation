@@ -58,13 +58,15 @@ nbr_effects = rand.randint(1,3)
 all_effects = []
 all_effects_color = []
 all_danger_values = []
+all_effects_cost = []
 for i in range(0,nbr_effects):
     vanilla_effect = rand.randint(0,5)
     final_effect = ""
 
     for category in card_effects:
         temp_effects = []
-        if category in {"Trigger", "Restriction", "Action", "Action Target", "Colors"}:
+        card_effects["Colors"] = game_colors
+        if category in {"Trigger", "Restriction", "Action", "Action Target"}:
             for element in card_effects[category]:
                 if str(element) != "nan":
                     temp_effects.append(element)
@@ -112,9 +114,18 @@ for i in range(0,nbr_effects):
     if danger_value:
         all_danger_values.append(danger_value)
         print("Danger Value : " + str(danger_value))
+
+    effect_cost = rand.randint(0,2)
+    if effect_cost == 0:
+        card_effects["Colors"][0] = "Gray"
+    if card_effects["Colors"][0] in {"Gray", "Black"}:
+        effect_cost = None
     if (final_type not in {"Activator", "Action"}) or (not vanilla_effect):
-        all_effects_color.append(str(card_effects["Colors"][0]))
-        print("Effect Requirements : " + str(card_effects["Colors"][0]))
+        all_effects_color.append(card_effects["Colors"][0])
+        if effect_cost:
+            all_effects_cost.append(effect_cost)
+            print("Effect Cost : " + str(effect_cost))
+        print("Effect Color : " + card_effects["Colors"][0])
 
 
 card_tag = rand.choice(card_name)
