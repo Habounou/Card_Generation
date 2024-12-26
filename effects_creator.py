@@ -6,7 +6,11 @@ card_effects = card_effects.to_dict(orient='list')
 card_type = card_effects.pop("Card Type")
 card_keywords = card_effects.pop("Other Keywords")
 
-rand.seed(0)
+card_name = (input("Card Name : ")).upper()
+card_id = 0
+for char in card_name:
+    card_id += ord(char)
+rand.seed(card_id)
 
 temp_type = []
 for element in card_type:
@@ -19,13 +23,17 @@ print("Card Type : " + final_type)
 
 if final_type != "Activator":
     danger_level = rand.randint(0,9)
-    print("Danger Level : " + str(danger_level) + "\n")
+    print("Danger Level : " + str(danger_level))
 else:
     danger_level = None
 
 rand.shuffle(card_keywords)
 if str(card_keywords[0]) != "nan":
-    print(card_keywords[0])
+    if final_type == "Activator":
+        if str(card_keywords[0]) != "[DOUBLE AMBUSH]":
+            print(card_keywords[0])
+    else:
+        print(card_keywords[0])
 
 nbr_effects = rand.randint(1,3)
 for i in range(0,nbr_effects + 1):
@@ -64,3 +72,6 @@ for i in range(0,nbr_effects + 1):
         print(final_effects)
     if danger_value:
         print("Danger Value : " + str(danger_value))
+
+card_tag = rand.choice(card_name)
+print("Card Tag : " + card_tag)
