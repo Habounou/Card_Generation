@@ -31,7 +31,7 @@ rand.shuffle(game_colors)
 final_color = temp_colors[0]
 print(final_color)
 
-if final_type != "Activator":
+if final_type not in {"Activator", "Action"}:
     danger_level = rand.randint(0,9)
     print("Danger Level : " + str(danger_level))
 else:
@@ -45,12 +45,14 @@ for element in card_keywords:
 rand.shuffle(card_keywords)
 for i in range(0, len(temp_keywords)):
     if str(card_keywords[i]) != "nan":
-        if final_type == "Activator":
+        if final_type in {"Activator", "Action"}:
             if str(card_keywords[i]) != "[DOUBLE AMBUSH]":
                 final_keywords.append(card_keywords[i])
         else:
             final_keywords.append(card_keywords[i])
-
+if final_keywords:
+    for element in final_keywords:
+        print(element + " ")
 
 nbr_effects = rand.randint(1,3)
 all_effects = []
@@ -72,6 +74,9 @@ for i in range(0,nbr_effects):
                 rand.shuffle(card_effects[category])
         else:
             rand.shuffle(card_effects[category])
+        if category == "Colors":
+            if rand.randint(0, 2) != 0:
+                card_effects[category][0] = final_color
 
     if not vanilla_effect:
         for category in card_effects:
@@ -93,7 +98,7 @@ for i in range(0,nbr_effects):
                     final_effect = str(card_effects[category][0])
         final_effect += "."
 
-    if final_type != "Activator":
+    if final_type not in {"Activator", "Action"}:
         danger_value = rand.randint(0, 9) * 10 + danger_level * 100
     else:
         danger_value = None
@@ -102,12 +107,12 @@ for i in range(0,nbr_effects):
         all_effects.append(final_effect)
         print("\n" + final_effect)
     else:
-        if final_type != "Activator":
+        if final_type not in {"Activator", "Action"}:
             print()
     if danger_value:
         all_danger_values.append(danger_value)
         print("Danger Value : " + str(danger_value))
-    if (final_type != "Activator") or (not vanilla_effect):
+    if (final_type not in {"Activator", "Action"}) or (not vanilla_effect):
         all_effects_color.append(str(card_effects["Colors"][0]))
         print("Effect Requirements : " + str(card_effects["Colors"][0]))
 
