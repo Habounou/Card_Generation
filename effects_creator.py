@@ -1,7 +1,6 @@
 import pandas as pd
-import openpyxl as op
-from openpyxl.utils.dataframe import dataframe_to_rows
 import random as rand
+from openpyxl import load_workbook
 
 card_effects = pd.read_excel("New_game_effects.xlsx", sheet_name='Feuil1')
 card_effects = card_effects.to_dict(orient='list')
@@ -142,6 +141,7 @@ for i in range(0, 3 - len(all_effects_cost)):
     all_effects_cost.append(None)
 for i in range(0, 3 - len(all_effects_color)):
     all_effects_color.append(None)
+for i in range(0, 3 - len(all_danger_values)):
     all_danger_values.append(None)
 
 card_infos = {"Card Name":card_name, "Card ID":card_id, "Card Type":final_type, "Card Color":final_color,
@@ -152,9 +152,14 @@ card_infos = {"Card Name":card_name, "Card ID":card_id, "Card Type":final_type, 
               "Effect 3 Cost":all_effects_cost[2], "Effect 3 Color":all_effects_color[2],
               "Effect 3 Danger":all_danger_values[2], "Tag":card_tag}
 
-df = pd.DataFrame([card_infos])
-wb = op.load_workbook("New_game_effects.xlsx")
-sheet = wb['Feuil2']
-for rows in dataframe_to_rows(df, index=False, header=False):
-    sheet.append(rows)
-wb.save("New_game_effects.xlsx")
+card_list = pd.read_excel("New_game_effects.xlsx", sheet_name='Feuil2')
+card_list = card_list.to_dict(orient='list')
+if card_name not in card_list["Card Name"]:
+    wb = load_workbook("New_game_effects.xlsx")
+    sheet = wb['Feuil2']
+    df = pd.DataFrame([card_infos])
+    for row in df.itertuples(index=False, name=None):
+        sheet.append(row)
+    wb.save("New_game_effects.xlsx")
+else:
+    print("This card already exists in your collection.")
