@@ -1,4 +1,6 @@
 import pandas as pd
+import openpyxl as op
+from openpyxl.utils.dataframe import dataframe_to_rows
 import random as rand
 
 card_effects = pd.read_excel("New_game_effects.xlsx", sheet_name='Feuil1')
@@ -131,7 +133,28 @@ for i in range(0,nbr_effects):
 card_tag = rand.choice(card_name)
 print("\nCard Tag : " + card_tag + "\n\n")
 
+if not final_keywords:
+    final_keywords = None
+
+for i in range(0, 3 - len(all_effects)):
+    all_effects.append(None)
+for i in range(0, 3 - len(all_effects_cost)):
+    all_effects_cost.append(None)
+for i in range(0, 3 - len(all_effects_color)):
+    all_effects_color.append(None)
+    all_danger_values.append(None)
+
 card_infos = {"Card Name":card_name, "Card ID":card_id, "Card Type":final_type, "Card Color":final_color,
-              "Danger Level":danger_level, "Keywords":final_keywords, "Effects":all_effects,
-              "Effects Color":all_effects_color, "Effects Danger Value":all_danger_values, "Tag":card_tag}
-print(card_infos)
+              "Danger Level":danger_level, "Keywords":final_keywords, "Effect 1":all_effects[0],
+              "Effect 1 Cost":all_effects_cost[0], "Effect 1 Color":all_effects_color[0],
+              "Effect 1 Danger":all_danger_values[0], "Effect 2":all_effects[1], "Effect 2 Cost":all_effects_cost[1],
+              "Effect 2 Color":all_effects_color[1], "Effect 2 Danger":all_danger_values[1], "Effect 3":all_effects[2],
+              "Effect 3 Cost":all_effects_cost[2], "Effect 3 Color":all_effects_color[2],
+              "Effect 3 Danger":all_danger_values[2], "Tag":card_tag}
+
+df = pd.DataFrame([card_infos])
+wb = op.load_workbook("New_game_effects.xlsx")
+sheet = wb['Feuil2']
+for rows in dataframe_to_rows(df, index=False, header=False):
+    sheet.append(rows)
+wb.save("New_game_effects.xlsx")
