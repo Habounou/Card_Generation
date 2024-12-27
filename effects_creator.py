@@ -8,7 +8,12 @@ card_type = card_effects.pop("Card Type")
 card_keywords = card_effects.pop("Other Keywords")
 game_colors = card_effects["Colors"]
 
-card_name = (input("Card Name : ")).upper()
+while True:
+    card_name = (input("Card Name : ")).upper()
+    if len(card_name) <= 15:
+        break
+    else:
+        print("Card name must be less than or equal to 15 characters.")
 card_id = 0
 for char in card_name:
     card_id += ord(char)
@@ -130,7 +135,7 @@ for i in range(0,nbr_effects):
 
 
 card_tag = rand.choice(card_name)
-print("\nCard Tag : " + card_tag + "\n\n")
+print("\nCard Tag : " + card_tag + "\n")
 
 if not final_keywords:
     final_keywords = None
