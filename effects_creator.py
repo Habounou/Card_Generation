@@ -19,13 +19,25 @@ for char in card_name:
     card_id += ord(char)
 rand.seed(card_id)
 
-temp_type = []
-for element in card_type:
-    if str(element) != "nan":
-        temp_type.append(element)
-card_type = temp_type
-rand.shuffle(card_type)
-final_type = card_type[0]
+spec_type = input("Do you wish to create a specific type of card ? (Y/N) : ").upper()
+if spec_type == "N":
+    temp_type = []
+    for element in card_type:
+        if str(element) != "nan":
+            temp_type.append(element)
+    card_type = temp_type
+    rand.shuffle(card_type)
+    final_type = card_type[0]
+else:
+    spec_type = input("Choose a type of card (AN/RO/AV/AC) : ").upper()
+    if spec_type == "RO":
+        final_type = "Room"
+    elif spec_type == "AV":
+        final_type = "Activator"
+    elif spec_type == "AC":
+        final_type = "Action"
+    else:
+        final_type = "Anomaly"
 print("Card Type : " + final_type)
 
 temp_colors = []
@@ -45,6 +57,7 @@ else:
 
 temp_keywords = []
 final_keywords = []
+all_keywords = ""
 for element in card_keywords:
     if str(element) != "nan":
         temp_keywords.append(element)
@@ -58,7 +71,10 @@ for i in range(0, len(temp_keywords)):
             final_keywords.append(card_keywords[i])
 if final_keywords:
     for element in final_keywords:
+        all_keywords += element + " "
         print(element + " ")
+else:
+    all_keywords = None
 
 nbr_effects = rand.randint(1,3)
 all_effects = []
@@ -146,11 +162,6 @@ for i in range(0,nbr_effects):
 card_tag = rand.choice(card_name)
 print("\nCard Tag : " + card_tag + "\n")
 
-if not final_keywords:
-    final_keywords = None
-else:
-    final_keywords = str(final_keywords)
-
 for i in range(0, 3 - len(all_effects)):
     all_effects.append(None)
 for i in range(0, 3 - len(all_effects_cost)):
@@ -161,7 +172,7 @@ for i in range(0, 3 - len(all_danger_values)):
     all_danger_values.append(None)
 
 card_infos = {"Card Name":card_name, "Card ID":card_id, "Card Type":final_type, "Card Color":final_color,
-              "Danger Level":danger_level, "Keywords":final_keywords, "Effect 1":all_effects[0],
+              "Danger Level":danger_level, "Keywords":all_keywords, "Effect 1":all_effects[0],
               "Effect 1 Cost":all_effects_cost[0], "Effect 1 Color":all_effects_color[0],
               "Effect 1 Danger":all_danger_values[0], "Effect 2":all_effects[1], "Effect 2 Cost":all_effects_cost[1],
               "Effect 2 Color":all_effects_color[1], "Effect 2 Danger":all_danger_values[1], "Effect 3":all_effects[2],
