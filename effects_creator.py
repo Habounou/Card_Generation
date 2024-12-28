@@ -10,10 +10,10 @@ game_colors = card_effects["Colors"]
 
 while True:
     card_name = (input("Card Name : ")).upper()
-    if len(card_name) <= 15:
+    if len(card_name) <= 20:
         break
     else:
-        print("Card name must be less than or equal to 15 characters.")
+        print("Card name must be less than or equal to 20 characters.")
 card_id = 0
 for char in card_name:
     card_id += ord(char)
@@ -66,7 +66,7 @@ all_effects_color = []
 all_danger_values = []
 all_effects_cost = []
 for i in range(0,nbr_effects):
-    vanilla_effect = rand.randint(0,5)
+    vanilla_effect = rand.randint(0,3)
     final_effect = ""
 
     for category in card_effects:
@@ -83,7 +83,7 @@ for i in range(0,nbr_effects):
         else:
             rand.shuffle(card_effects[category])
         if category == "Colors":
-            if rand.randint(0, 2) != 0:
+            if rand.randint(0, 1) != 0:
                 card_effects[category][0] = final_color
 
     if not vanilla_effect:
@@ -121,17 +121,20 @@ for i in range(0,nbr_effects):
         all_danger_values.append(danger_value)
         print("Danger Value : " + str(danger_value))
 
-    effect_cost = rand.randint(0,2)
-    if effect_cost == 0:
-        card_effects["Colors"][0] = "Gray"
+    effect_cost = None
+    if final_type != "Activator":
+        effect_cost = rand.randint(0,2)
+        if effect_cost == 0:
+            card_effects["Colors"][0] = "Gray"
     if card_effects["Colors"][0] in {"Gray", "Black"}:
         effect_cost = None
     if (final_type not in {"Activator", "Action"}) or (not vanilla_effect):
-        all_effects_color.append(card_effects["Colors"][0])
+        if final_type != "Activator":
+            all_effects_color.append(card_effects["Colors"][0])
+            print("Effect Color : " + card_effects["Colors"][0])
         if effect_cost:
             all_effects_cost.append(effect_cost)
             print("Effect Cost : " + str(effect_cost))
-        print("Effect Color : " + card_effects["Colors"][0])
 
 
 card_tag = rand.choice(card_name)
@@ -139,6 +142,8 @@ print("\nCard Tag : " + card_tag + "\n")
 
 if not final_keywords:
     final_keywords = None
+else:
+    final_keywords = str(final_keywords)
 
 for i in range(0, 3 - len(all_effects)):
     all_effects.append(None)
