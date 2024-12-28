@@ -106,28 +106,34 @@ for i in range(0,nbr_effects):
                     final_effect = str(card_effects[category][0])
         final_effect += "."
 
-    if final_type not in {"Activator", "Action"}:
-        danger_value = rand.randint(0, 9) * 10 + danger_level * 100
-    else:
-        danger_value = None
+
+    effect_cost = None
+    if final_type != "Activator":
+        effect_cost = rand.randint(0, 2)
+        if effect_cost == 0:
+            card_effects["Colors"][0] = "Gray"
+    if card_effects["Colors"][0] in {"Gray", "Black"}:
+        effect_cost = None
 
     if final_effect:
         all_effects.append(final_effect)
         print("\n" + final_effect)
     else:
         if final_type not in {"Activator", "Action"}:
+            if card_effects["Colors"][0] in all_effects_color:
+                effect_cost = None
+                continue
             print()
+
+    if final_type not in {"Activator", "Action"}:
+        danger_value = rand.randint(0, 9) * 10 + danger_level * 100
+    else:
+        danger_value = None
+
     if danger_value:
         all_danger_values.append(danger_value)
         print("Danger Value : " + str(danger_value))
 
-    effect_cost = None
-    if final_type != "Activator":
-        effect_cost = rand.randint(0,2)
-        if effect_cost == 0:
-            card_effects["Colors"][0] = "Gray"
-    if card_effects["Colors"][0] in {"Gray", "Black"}:
-        effect_cost = None
     if (final_type not in {"Activator", "Action"}) or (not vanilla_effect):
         if final_type != "Activator":
             all_effects_color.append(card_effects["Colors"][0])
