@@ -14,6 +14,7 @@ while True:
         break
     else:
         print("Card name must be less than or equal to 20 characters.")
+card_name_copy = card_name.replace(" ", "")
 card_id = 0
 for char in card_name:
     card_id += ord(char)
@@ -82,7 +83,10 @@ all_effects_color = []
 all_danger_values = []
 all_effects_cost = []
 for i in range(0,nbr_effects):
-    vanilla_effect = rand.randint(0,3)
+    if final_type != "Action":
+        vanilla_effect = rand.randint(0,3)
+    else:
+        vanilla_effect = 0
     final_effect = ""
 
     for category in card_effects:
@@ -112,7 +116,7 @@ for i in range(0,nbr_effects):
                 elif category == "Action Target":
                     for j in range(0, str(card_effects[category]).count("specific card tag")):
                         card_effects[category][0] = (
-                            (card_effects[category][0]).replace("specific card tag", rand.choice(card_name), 1))
+                            (card_effects[category][0]).replace("specific card tag", rand.choice(card_name_copy), 1))
                 elif category == "Spontaneous Trigger":
                     if str(card_effects["Trigger"][0]) == "SPONTANEOUS":
                         final_effect += " " + str(card_effects[category][0])
@@ -159,7 +163,7 @@ for i in range(0,nbr_effects):
             print("Effect Cost : " + str(effect_cost))
 
 
-card_tag = rand.choice(card_name)
+card_tag = rand.choice(card_name_copy)
 print("\nCard Tag : " + card_tag + "\n")
 
 for i in range(0, 3 - len(all_effects)):
