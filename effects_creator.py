@@ -20,15 +20,16 @@ for char in card_name:
     card_id += ord(char)
 rand.seed(card_id)
 
+temp_type = []
+for element in card_type:
+    if str(element) != "nan":
+        temp_type.append(element)
+card_type = temp_type
+rand.shuffle(card_type)
 spec_type = input("Do you wish to create a specific type of card ? (Y/N) : ").upper()
 if spec_type == "N":
-    temp_type = []
-    for element in card_type:
-        if str(element) != "nan":
-            temp_type.append(element)
-    card_type = temp_type
-    rand.shuffle(card_type)
     final_type = card_type[0]
+    native = "T"
 else:
     spec_type = input("Choose a type of card (AN/RO/AV/AC) : ").upper()
     if spec_type == "RO":
@@ -39,6 +40,10 @@ else:
         final_type = "Action"
     else:
         final_type = "Anomaly"
+    if final_type == card_type[0]:
+        native = "T"
+    else:
+        native = "F"
 print("Card Type : " + final_type)
 
 temp_colors = []
@@ -181,11 +186,16 @@ card_infos = {"Card Name":card_name, "Card ID":card_id, "Card Type":final_type, 
               "Effect 1 Danger":all_danger_values[0], "Effect 2":all_effects[1], "Effect 2 Cost":all_effects_cost[1],
               "Effect 2 Color":all_effects_color[1], "Effect 2 Danger":all_danger_values[1], "Effect 3":all_effects[2],
               "Effect 3 Cost":all_effects_cost[2], "Effect 3 Color":all_effects_color[2],
-              "Effect 3 Danger":all_danger_values[2], "Tag":card_tag}
+              "Effect 3 Danger":all_danger_values[2], "Tag":card_tag, "Native":native}
 
 card_list = pd.read_excel("New_game_effects.xlsx", sheet_name='Feuil2')
 card_list = card_list.to_dict(orient='list')
-if card_name not in card_list["Card Name"]:
+save = True
+for i in range(0, len(card_list["Card Name"])):
+    if (card_list["Card Name"][i] == card_name) and (card_list["Card Type"][i] == final_type):
+        save = False
+        break
+if save:
     wb = load_workbook("New_game_effects.xlsx")
     sheet = wb['Feuil2']
     df = pd.DataFrame([card_infos])
