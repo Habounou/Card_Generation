@@ -1,12 +1,14 @@
 import pandas as pd
 import random as rand
 from openpyxl import load_workbook
+from function import sp_card_effects
 
 card_effects = pd.read_excel("New_game_effects.xlsx", sheet_name='Feuil1')
 card_effects = card_effects.to_dict(orient='list')
 card_type = card_effects.pop("Card Type")
 card_keywords = card_effects.pop("Other Keywords")
 game_colors = card_effects["Colors"]
+sp_card_effects(card_effects)
 
 while True:
     card_name = (input("Card Name : ")).upper()
